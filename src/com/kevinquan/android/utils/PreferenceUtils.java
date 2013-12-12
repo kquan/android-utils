@@ -40,8 +40,13 @@ public class PreferenceUtils {
 	 */
 	public interface BasePreferences {
 		public static final String RATEAPP = "RateApp"; //$NON-NLS-1$
+		public static final String HAS_RATED = "HasRatedApp"; //$NON-NLS-1$
+	    public static final String SHOULD_PROMPT_TO_RATEAPP = "HasPromptedToRateApp"; //$NON-NLS-1$
+		
 		public static final String CHANGELOG = "ShowChangelog"; //$NON-NLS-1$
-		public static final String CHANGELOG_PATH = "file:///android_asset/changelog.html";
+		public static final String CHANGELOG_PATH = "file:///android_asset/changelog.html"; //$NON-NLS-1$
+		public static final String LICENSES = "ShowLicenses"; //$NON-NLS-1$
+		public static final String LICENSES_PATH = "file:///android_asset/licenses.html"; //$NON-NLS-1$
 		public static final String ABOUT_AUTHOR = "AboutAuthor"; //$NON-NLS-1$
 		public static final String ABOUT_AUTHOR_WEBSITE = "http://www.kevinquan.com/"; //$NON-NLS-1$	
 	}
