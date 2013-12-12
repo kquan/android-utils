@@ -1,20 +1,39 @@
+/*
+ * Copyright 2013 Kevin Quan (kevin.quan@gmail.com)
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.kevinquan.android.utils;
 
 import java.util.List;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 import android.util.Log;
 
+/**
+ * Utilities to enable safe handling of {@link Cursor} objects
+ * @author Kevin Quan (kevin.quan@gmail.com)
+ *
+ */
 public class CursorUtils {
 
-    private static final String TAG = CursorUtils.class.getSimpleName();
-    
-    public static final long VALUE_NO_ID = -1;
-    
-    public static final int VALUE_FALSE = 0;
-    public static final int VALUE_TRUE = 1;
-    
+    /**
+     * Simple structure to hold details about the index to create
+     * @author Kevin Quan (kevin.quan@gmail.com)
+     *
+     */
     public static class IndexInfo {
         String table;
         String column;
@@ -25,7 +44,20 @@ public class CursorUtils {
         }
     }
     
+    private static final String TAG = CursorUtils.class.getSimpleName();
+    
+    public static final long VALUE_NO_ID = -1;
+    public static final int VALUE_FALSE = 0;
+    
+    public static final int VALUE_TRUE = 1;
+    
+    /**
+     * Convenience method to add an index to a table following a specific pattern.  The index will be named idx_[table name]_[column name] 
+     * @param database The database to create the index
+     * @param index details about the index.
+     */
     public static void addIndex(SQLiteDatabase database, List<IndexInfo> index) {
+        if (database == null || index == null) return;
         for (IndexInfo info : index) {
             String indexQuery = "CREATE INDEX idx_"+info.table+"_"+info.column+" ON "+info.table+"("+info.column+")";
             Log.d(TAG, "Adding index: "+indexQuery);
@@ -33,47 +65,75 @@ public class CursorUtils {
         }
     }
 
+    /**
+     * Check whether the column name exists in the result set.
+     * @param result The result set to check
+     * @param columnName The column name to check
+     * @return true if the column exists in the result set
+     */
     public static boolean hasColumn(Cursor result, String columnName) {
+        if (result == null || TextUtils.isEmpty(columnName)) return false;
         int columnIndex = result.getColumnIndex(columnName);
         return columnIndex != -1;
     }
     
-    public static String safeGetString(Cursor result, String columnName) {
-        int columnIndex = result.getColumnIndex(columnName);
-        if (columnIndex == -1) return null;
-        try {
-            return result.getString(columnIndex);
-        } catch (Exception e) {
-            Log.e(TAG, "Could not retrieve string value for "+columnName,e);
-            return null;
+    /**
+     * Safely close a cursor
+     * @param cursorToClose The cursor to close
+     */
+    public static void safeClose(Cursor cursorToClose) {
+        if (cursorToClose != null) {
+            cursorToClose.close();
         }
     }
     
-    public static int safeGetInt(Cursor result, String columnName, int defaultValue) {
+    /**
+     * Retrieve a double from the provided column in the provided result set.
+     * @param result The result set to retrieve from
+     * @param columnName The column to retrieve
+     * @return The actual double, or the default value if the column doesn't exist.
+     */
+    public static double safeGetDouble(Cursor result, String columnName, double defaultValue) {
+        if (result == null || TextUtils.isEmpty(columnName)) return defaultValue;
         int columnIndex = result.getColumnIndex(columnName);
-        if (columnIndex == -1) return defaultValue;
+        if (columnIndex == -1 || result.getColumnCount() <= columnIndex) return defaultValue;
+        try {
+            return result.getDouble(columnIndex);
+        } catch (Exception e) {
+            Log.e(TAG, "Could not retrieve double value for "+columnName,e);
+            return defaultValue;
+        }
+    }
+
+    /**
+     * Retrieve an integer from the provided column in the provided result set.
+     * @param result The result set to retrieve from
+     * @param columnName The column to retrieve
+     * @return The actual integer, or the default value if the column doesn't exist.
+     */
+    public static int safeGetInt(Cursor result, String columnName, int defaultValue) {
+        if (result == null || TextUtils.isEmpty(columnName)) return defaultValue;
+        int columnIndex = result.getColumnIndex(columnName);
+        if (columnIndex == -1 || result.getColumnCount() <= columnIndex) return defaultValue;
         try {
             return result.getInt(columnIndex);
         } catch (Exception e) {
-            Log.e(TAG, "Could not retrieve int value for "+columnName,e);
+            Log.e(TAG, "Could not retrieve integar value for "+columnName,e);
             return defaultValue;
         }
     }
 
-    public static long safeGetLong(Cursor result, String columnName, long defaultValue) {
-        int columnIndex = result.getColumnIndex(columnName);
-        if (columnIndex == -1) return defaultValue;
-        try {
-            return result.getLong(columnIndex);
-        } catch (Exception e) {
-            Log.e(TAG, "Could not retrieve long value for "+columnName,e);
-            return defaultValue;
-        }
-    }
-
+    /**
+     * Retrieve a boolean from the provided column in the provided result set.  It is expected that the 
+     * provider models boolean using the values provided in {@link CursorUtils}
+     * @param result The result set to retrieve from
+     * @param columnName The column to retrieve
+     * @return The actual boolean, or null if the column doesn't exist.
+     */
     public static boolean safeGetIntBackedBoolean(Cursor result, String columnName, boolean defaultValue) {
+        if (result == null || TextUtils.isEmpty(columnName)) return defaultValue;
         int columnIndex = result.getColumnIndex(columnName);
-        if (columnIndex == -1) return defaultValue;
+        if (columnIndex == -1 || result.getColumnCount() <= columnIndex) return defaultValue;
         try {
             return result.getInt(columnIndex) == VALUE_TRUE;
         } catch (Exception e) {
@@ -82,20 +142,39 @@ public class CursorUtils {
         }
     }
     
-    public static double safeGetDouble(Cursor result, String columnName, double defaultValue) {
+    /**
+     * Retrieve a long from the provided column in the provided result set.
+     * @param result The result set to retrieve from
+     * @param columnName The column to retrieve
+     * @return The actual long, or the default value if the column doesn't exist.
+     */
+    public static long safeGetLong(Cursor result, String columnName, long defaultValue) {
+        if (result == null || TextUtils.isEmpty(columnName)) return defaultValue;
         int columnIndex = result.getColumnIndex(columnName);
-        if (columnIndex == -1) return defaultValue;
+        if (columnIndex == -1 || result.getColumnCount() <= columnIndex) return defaultValue;
         try {
-            return result.getDouble(columnIndex);
+            return result.getLong(columnIndex);
         } catch (Exception e) {
-            Log.e(TAG, "Could not retrieve string value for "+columnName,e);
+            Log.e(TAG, "Could not retrieve long value for "+columnName,e);
             return defaultValue;
         }
     }
     
-    public static void safeClose(Cursor result) {
-        if (result != null) {
-            result.close();
+    /**
+     * Retrieve a string from the provided column in the provided result set.
+     * @param result The result set to retrieve from
+     * @param columnName The column to retrieve
+     * @return The actual string, or null if the column doesn't exist.
+     */
+    public static String safeGetString(Cursor result, String columnName) {
+        if (result == null || TextUtils.isEmpty(columnName)) return null;
+        int columnIndex = result.getColumnIndex(columnName);
+        if (columnIndex == -1 || result.getColumnCount() <= columnIndex) return null;
+        try {
+            return result.getString(columnIndex);
+        } catch (Exception e) {
+            Log.e(TAG, "Could not retrieve string value for "+columnName,e);
+            return null;
         }
     }
 
