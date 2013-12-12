@@ -6,7 +6,7 @@ A diverse collection of Android utilities that are useful in Android development
 Credits & Contact
 =================
 
-android-accounts-mock was made by [Kevin Quan](mailto:kevin.quan+github@gmail.com)
+android-utils was made by [Kevin Quan](mailto:kevin.quan+github@gmail.com)
 
 License
 -------
