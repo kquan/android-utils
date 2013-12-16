@@ -43,6 +43,8 @@ public class DeviceUtils {
     private static final String TAG = DeviceUtils.class.getSimpleName();
     
     public static final String SCHEME_FILE = "file://";
+    
+    public static final String LINE_BREAK = System.getProperty("line.separator");
 
     /**
      * Converts a dp value to the actual pixel size given the provided context
