@@ -50,6 +50,24 @@ public class JSONUtils {
     }
 
     /**
+     * Retrieve aJSON array stored at the provided key from the provided JSON object
+     * @param obj The JSON object to retrieve from
+     * @param key The key to retrieve
+     * @return the array stored in the key, or null if the key doesn't exist
+     */
+    public static JSONArray safeGetArrayFromArray(JSONObject obj, String key) {
+        if (obj == null || TextUtils.isEmpty(key)) return null;
+        if (obj.has(key)) {
+            try {
+                return obj.getJSONArray(key);
+            } catch (JSONException e) {
+                Log.w(TAG, "Could not get Array from JSONArray from key "+key,e);
+            }
+        }
+        return null;
+    }
+    
+    /**
      * Retrieve a boolean stored at the provided key from the provided JSON object
      * @param obj The JSON object to retrieve from
      * @param key The key to retrieve
@@ -85,6 +103,42 @@ public class JSONUtils {
         return defaultValue;
     }
     
+    /**
+     * Retrieve an integer stored at the provided key from the provided JSON object
+     * @param obj The JSON object to retrieve from
+     * @param key The key to retrieve
+     * @return the integer stored in the key, or the default value if the key doesn't exist
+     */
+    public static int safeGetInt(JSONObject obj, String key, int defaultValue) {
+        if (obj == null || TextUtils.isEmpty(key)) return defaultValue;
+        if (obj.has(key)) {
+            try {
+                return obj.getInt(key);
+            } catch (JSONException e) {
+                Log.w(TAG, "Could not get int from key "+key,e);
+            }
+        }
+        return defaultValue;
+    }
+    
+    /**
+     * Retrieve the JSON object stored at the provided key from the provided JSON object
+     * @param obj The JSON object to retrieve from
+     * @param key The key to retrieve
+     * @return the JSON object stored in the key, or null if the key doesn't exist
+     */
+    public static JSONObject safeGetJSONObject(JSONObject obj, String key) {
+        if (obj == null || TextUtils.isEmpty(key)) return null;
+        if (obj.has(key)) {
+            try {
+                return obj.getJSONObject(key);
+            } catch (JSONException e) {
+                Log.w(TAG, "Could not get JSON object from key "+key,e);
+            }
+        }
+        return null;
+    }
+
     /**
      * Retrieve a JSON object stored at the provided index from the provided JSON Array object
      * @param obj The JSON Array object to retrieve from
@@ -138,7 +192,7 @@ public class JSONUtils {
         }
         return null;
     }
-
+    
     /**
      * Retrieve a string stored at the provided key from the provided JSON object
      * @param obj The JSON object to retrieve from
@@ -158,6 +212,99 @@ public class JSONUtils {
     }
     
     /**
+     * Retrieve a string stored at the provided index from the provided JSON array
+     * @param obj The JSON array to retrieve from
+     * @param index The index to retrieve the string from
+     * @return the string stored at the index, or null if the index doesn't exist
+     */
+    public static String safeGetStringFromArray(JSONArray obj, int index) {
+        if (obj != null && obj.length() > index) {
+            try {
+                return obj.getString(index);
+            } catch (JSONException e) {
+                Log.w(TAG, "Could not get string from JSONArray from at index "+index,e);
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Inserts a JSON Array in the provided JSON object at the specified key.  Will overwrite any existing value for the key.  
+     * A null array can be stored.
+     * @param obj The JSON object to write to
+     * @param key The key to place the value
+     * @param value The value to add
+     */
+    public static void safePutArray(JSONObject obj, String key, JSONArray value) {
+        if (obj == null || TextUtils.isEmpty(key)) return;
+        try {
+            obj.put(key, value);
+        } catch (JSONException e) {
+            Log.w(TAG, "Could not put array with key "+key,e);
+        }
+    }
+    
+    /**
+     * Inserts a boolean in the provided JSON object at the specified key.  Will overwrite any existing value for the key
+     * @param obj The JSON object to write to
+     * @param key The key to place the value
+     * @param value The value to add
+     */
+    public static void safePutBoolean(JSONObject obj, String key, boolean value) {
+        if (obj == null || TextUtils.isEmpty(key)) return;
+        try {
+            obj.put(key, value);
+        } catch (JSONException e) {
+            Log.w(TAG, "Could not put boolean with key "+key,e);
+        }
+    }
+    
+    /**
+     * Inserts a double in the provided JSON object at the specified key.  Will overwrite any existing value for the key
+     * @param obj The JSON object to write to
+     * @param key The key to place the value
+     * @param value The value to add
+     */
+    public static void safePutDouble(JSONObject obj, String key, double value) {
+        if (obj == null || TextUtils.isEmpty(key)) return;
+        try {
+            obj.put(key, value);
+        } catch (JSONException e) {
+            Log.w(TAG, "Could not put double with key "+key,e);
+        }
+    }
+    
+    /**
+     * Inserts a float in the provided JSON object at the specified key.  Will overwrite any existing value for the key
+     * @param obj The JSON object to write to
+     * @param key The key to place the value
+     * @param value The value to add
+     */
+    public static void safePutFloat(JSONObject obj, String key, float value) {
+        if (obj == null || TextUtils.isEmpty(key)) return;
+        try {
+            obj.put(key, value);
+        } catch (JSONException e) {
+            Log.w(TAG, "Could not put float with key "+key,e);
+        }
+    }
+    
+    /**
+     * Inserts a integer in the provided JSON object at the specified key.  Will overwrite any existing value for the key
+     * @param obj The JSON object to write to
+     * @param key The key to place the value
+     * @param value The value to add
+     */
+    public static void safePutInt(JSONObject obj, String key, int value) {
+        if (obj == null || TextUtils.isEmpty(key)) return;
+        try {
+            obj.put(key, value);
+        } catch (JSONException e) {
+            Log.w(TAG, "Could not put int with key "+key,e);
+        }
+    }
+    
+    /**
      * Inserts a long in the provided JSON object at the specified key.  Will overwrite any existing value for the key
      * @param obj The JSON object to write to
      * @param key The key to place the value
@@ -169,6 +316,22 @@ public class JSONUtils {
             obj.put(key, value);
         } catch (JSONException e) {
             Log.w(TAG, "Could not put long with key "+key);
+        }
+    }
+
+    /**
+     * Inserts a JSON object in the provided JSON object at the specified key.  Will overwrite any existing value for the key
+     * A null object can be stored.
+     * @param obj The JSON object to write to
+     * @param key The key to place the value
+     * @param value The value to add
+     */
+    public static void safePutObject(JSONObject obj, String key, JSONObject value) {
+        if (obj == null || TextUtils.isEmpty(key)) return;
+        try {
+            obj.put(key, value);
+        } catch (JSONException e) {
+            Log.w(TAG, "Could not put object with key "+key,e);
         }
     }
     

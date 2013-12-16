@@ -26,9 +26,12 @@ public class GoogleAnalyticsUtils {
 	private static final String TAG = GoogleAnalyticsUtils.class.getSimpleName();
 
 	public static interface BaseAnalytics {
+	    public static final String CATEGORY_PREFERENCES = "Preferences";
 		public static final String CATEGORY_ABOUT_APP = "AboutApp";
 
-		public static final String ACTION_VIEW = "Click";
+		public static final String ACTION_BUTTON_PRESS = "ButtonPress";
+		public static final String ACTION_CLICK = "Tap";
+		public static final String ACTION_VIEW = "View";
 		public static final String ACTION_EDIT = "Edit";
 		public static final String ACTION_ENABLE = "Enable";
 		public static final String ACTION_DISABLE = "Disable";

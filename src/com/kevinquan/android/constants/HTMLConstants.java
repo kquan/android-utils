@@ -31,4 +31,5 @@ public interface HTMLConstants {
     public static final String ATTRIBUTE_COLSPAN = "colspan";
     public static final String ATTRIBUTE_VALUE = "value";
     public static final String ATTRIBUTE_SELECTED = "selected";
+    public static final String ATTRIBUTE_SOURCE = "src";
 }
