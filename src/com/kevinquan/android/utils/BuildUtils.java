@@ -17,6 +17,7 @@ package com.kevinquan.android.utils;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.util.Log;
@@ -29,6 +30,50 @@ import android.util.Log;
 public class BuildUtils {
 
     private static final String TAG = BuildUtils.class.getSimpleName();
+    
+    public static final int UNKNOWN_VERSION_CODE = -1;
+    
+    /**
+     * Retrieves the version code of the app whose context is provided
+     * @param context The context of the app whose version code we wish to get
+     * @return The version code or {@link UNKNOWN_VERSION_CODE} if it could not be retrieved.
+     */
+    public static int getVersionCode(Context context) {
+        if (context == null) return UNKNOWN_VERSION_CODE;
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            if (packageInfo == null) {
+                return UNKNOWN_VERSION_CODE;
+            }
+            return packageInfo.versionCode;
+        } catch (NameNotFoundException nnfe) {
+            Log.w("Could not return version code as could not get package name.", nnfe);
+        } catch (RuntimeException re) {
+            Log.w(TAG, "Could not return version code: "+re.getMessage(), re);
+        }
+        return UNKNOWN_VERSION_CODE;
+    }
+    
+    /**
+     * Retrieves the version name of the app whose context is provided
+     * @param context The context of the app whose version name we wish to get
+     * @return The version name or name if it could not be retrieved.
+     */
+    public static String getVersionName(Context context) {
+        if (context == null) return null;;
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            if (packageInfo == null) {
+                return null;
+            }
+            return packageInfo.versionName;
+        } catch (NameNotFoundException nnfe) {
+            Log.w("Could not return version name as could not get package name.", nnfe);
+        } catch (RuntimeException re) {
+            Log.w(TAG, "Could not return version name: "+re.getMessage(), re);
+        }
+        return null;
+    }
     
     /**
      * Checks whether the current binary is debuggable

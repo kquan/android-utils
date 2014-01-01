@@ -17,9 +17,7 @@ package com.kevinquan.android.utils;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -47,8 +45,6 @@ public class DeviceUtils {
     public static final String SCHEME_FILE = "file://";
     
     public static final String LINE_BREAK = System.getProperty("line.separator");
-    
-    public static final int UNKNOWN_VERSION_CODE = -1;
 
     /**
      * Converts a dp value to the actual pixel size given the provided context
@@ -80,27 +76,6 @@ public class DeviceUtils {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         // 0.5 is added to allow proper rounding when truncating
         return pixels / displayMetrics.density;
-    }
-    
-    /**
-     * Retrieves the version code of the app whose context is provided
-     * @param context The context of the app whose version code we wish to get
-     * @return The version code or {@link UNKNOWN_VERSION_CODE} if it could not be retrieved.
-     */
-    public static int getVersionCode(Context context) {
-        if (context == null) return UNKNOWN_VERSION_CODE;
-        try {
-            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            if (packageInfo == null) {
-                return UNKNOWN_VERSION_CODE;
-            }
-            return packageInfo.versionCode;
-        } catch (NameNotFoundException nnfe) {
-            Log.w("Could not return version code as could not get package name.", nnfe);
-        } catch (RuntimeException re) {
-            Log.w(TAG, "Could not return versioncode: "+re.getMessage(), re);
-        }
-        return UNKNOWN_VERSION_CODE;
     }
     
     /**
