@@ -20,16 +20,22 @@ package com.kevinquan.android.constants;
  * @author Kevin Quan (kevin.quan@gmail.com)
  *
  */
-public interface HTMLConstants {
+public interface HtmlConstants {
 
+    public static final String A = "a";
+    
+    public static final String IMG = "img";
+    
+    // Table elements
     public static final String TBODY = "tbody";
     public static final String TR = "tr";
     public static final String TD = "td";
     public static final String TH = "th";
     
-    public static final String ATTRIBUTE_ID = "id";
     public static final String ATTRIBUTE_COLSPAN = "colspan";
-    public static final String ATTRIBUTE_VALUE = "value";
+    public static final String ATTRIBUTE_HREF = "href";
+    public static final String ATTRIBUTE_ID = "id";
     public static final String ATTRIBUTE_SELECTED = "selected";
     public static final String ATTRIBUTE_SOURCE = "src";
+    public static final String ATTRIBUTE_VALUE = "value";
 }
