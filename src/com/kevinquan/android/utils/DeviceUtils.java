@@ -21,6 +21,8 @@ import android.content.pm.PackageManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * Utility class for methods related to a device
@@ -99,6 +101,28 @@ public class DeviceUtils {
     public static boolean hasPermission(Context context, String permission) {
         if (context == null || TextUtils.isEmpty(permission)) return false;
         return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+    }
+    
+    /**
+     * Hides the keyboard implicitly if it is visible
+     * @param context The context from which to get the InputMethodManager
+     * @param viewToGetWindowToken The view from which to get a window token.
+     */
+    public static void hideKeyboard(Context context, View viewToGetWindowToken) {
+        if (context == null || viewToGetWindowToken == null) return;
+        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(viewToGetWindowToken.getWindowToken(), 0);
+    }
+    
+    /**
+     * Shows the keyboard and sends input to the provided field
+     * @param context The context from which to get the InputMethodManager
+     * @param viewToSendInput The view for the keyboard to send input to.
+     */
+    public static void showKeyboard(Context context, View viewToSendInput) {
+        if (context == null || viewToSendInput == null) return;
+        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(viewToSendInput, 0);
     }
 
 }
