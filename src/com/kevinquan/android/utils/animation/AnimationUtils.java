@@ -91,5 +91,48 @@ public class AnimationUtils {
         }
         return null;
     }
+    
+    /**
+     * On API12 or higher, fades in a view by animating the alpha from the current alpha to the final alpha.
+     * On API12 or lower, it will just set the view's visibility to the provided end state immediately.
+     * 
+     *  Options should include values for: 
+     *  VIEW_INITIAL_ALPHA ([0..1f], default to 0f)
+     *  VIEW_FINAL_ALPHA ([0..1f], default to 1f)
+     * 
+     * @param view The view to fade in
+     * @param options The options that govern the animation
+     * @return The animator if animation can happen, or null otherwise
+     */
+    @SuppressLint("NewApi")
+    public static ViewPropertyAnimator fadeInView(final View view, AnimationUtilOptions options) {
+        if (options == null) {
+            Log.i(TAG, "No options provided, using defaults.");
+            options = new AnimationUtilOptions.Builder().build();
+        }
+        final float initialAlpha = options.getFloatOption(VIEW_INITIAL_ALPHA, 0f);
+        float finalAlpha = options.getFloatOption(VIEW_FINAL_ALPHA, 1f);
+        if (BuildUtils.isHoneycombMR1OrGreater()) {
+            view.setAlpha(initialAlpha);
+            ViewPropertyAnimator animator = view.animate()
+                                                .alpha(finalAlpha)
+                                                .setDuration(options.getDuration())
+                                                .setInterpolator(options.getInterpolator())
+                                                .setStartDelay(options.getStartDelay());
+            animator.setListener(new AnimatorListenerAdapter() {
+                @Override public void onAnimationStart(Animator animation) {
+                    view.setVisibility(View.VISIBLE);
+                }
+            });
+            if (options.shouldStartImmediately()) {
+                animator.start();
+            }
+            return animator;
+        } else {
+            view.setVisibility(View.VISIBLE);
+            view.setAlpha(finalAlpha);
+        }
+        return null;
+    }
 
 }
