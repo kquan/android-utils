@@ -121,4 +121,12 @@ public class BuildUtils {
     public static boolean isIceCreamSandwhichOrGreater() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH;
     }
+    
+    /**
+     * Checks whether the current environment is Ice Cream Sandwich or higher 
+     * @return True if it is
+     */
+    public static boolean isJellyBeanOrGreater() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+    }
 }
