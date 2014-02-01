@@ -28,8 +28,10 @@ public class GoogleAnalyticsUtils {
 	public static interface BaseAnalytics {
 	    public static final String CATEGORY_PREFERENCES = "Preferences";
 		public static final String CATEGORY_ABOUT_APP = "AboutApp";
+		public static final String CATEGORY_NAVIGATION = "Navigation";
 
 		public static final String ACTION_BUTTON_PRESS = "ButtonPress";
+		public static final String ACTION_BACK_PRESSED = "BackButtonPress";
 		public static final String ACTION_CLICK = "Tap";
 		public static final String ACTION_VIEW = "View";
 		public static final String ACTION_EDIT = "Edit";
@@ -37,9 +39,11 @@ public class GoogleAnalyticsUtils {
 		public static final String ACTION_DISABLE = "Disable";
 		public static final String ACTION_ERROR = "Error";
 		public static final String ACTION_SEARCH = "Search";
+		public static final String ACTION_SELECTION = "Select";
 		
 		public static final String ERROR_NO_NETWORK = "No Network";
 
+		public static final String BUTTON_ABOUT_APP = "AboutApp";
 		public static final String BUTTON_RATE = "RateApp";
 		public static final String BUTTON_REQUESTED_RATE = "RequestedRateApp";
 		public static final String BUTTON_CHANGELOG = "Changelog";
