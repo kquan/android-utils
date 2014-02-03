@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Kevin Quan (kevin.quan@gmail.com)
+ * Copyright 2014 Kevin Quan (kevin.quan@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,9 @@ public class GoogleAnalyticsUtils {
 		public static final String ACTION_SELECTION = "Select";
 		
 		public static final String ERROR_NO_NETWORK = "No Network";
+		
+		public static final String ORIENTATION_LANDSCAPE = "Landscape";
+		public static final String ORIENTATION_PORTRAIT = "Portrait";
 
 		public static final String BUTTON_ABOUT_APP = "AboutApp";
 		public static final String BUTTON_RATE = "RateApp";
