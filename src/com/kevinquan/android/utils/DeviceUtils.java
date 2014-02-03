@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Kevin Quan (kevin.quan@gmail.com)
+ * Copyright 2014 Kevin Quan (kevin.quan@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,16 @@
  */
 package com.kevinquan.android.utils;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.graphics.Point;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -123,6 +127,34 @@ public class DeviceUtils {
         if (context == null || viewToSendInput == null) return;
         InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(viewToSendInput, 0);
+    }
+    
+    /**
+     * Determines the screen orientation.  Return values are defined in {@link Configuration}
+     * @param activity An activity to get the display from 
+     * @return A constant for the screen orientation
+     */
+    @SuppressWarnings("deprecation")
+    @SuppressLint("NewApi")
+    public static int getScreenOrientation(Activity activity) {
+        if (activity == null) {
+            return Configuration.ORIENTATION_UNDEFINED;
+        }
+        Display display = activity.getWindowManager().getDefaultDisplay();
+        Point dimensions = new Point();
+        if (BuildUtils.isHoneycombMR2OrGreater()) {
+            display.getSize(dimensions);
+        } else {
+            dimensions.x = display.getWidth();
+            dimensions.y = display.getHeight();
+        }
+        if (dimensions.x == dimensions.y) {
+            return Configuration.ORIENTATION_SQUARE;
+        } else if (dimensions.y > dimensions.x) {
+            return Configuration.ORIENTATION_LANDSCAPE;
+        } else {
+            return Configuration.ORIENTATION_PORTRAIT;
+        }
     }
 
 }
