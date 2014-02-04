@@ -21,11 +21,13 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
 /**
@@ -157,4 +159,21 @@ public class DeviceUtils {
         }
     }
 
+    /**
+     * Retrieve the height of the status bar
+     * @param activity A visual activity to use to get a window
+     * @return The height of the status bar, or 0 if it could not be computed.
+     */
+    public static int getStatusBarHeight(Activity activity) {
+        if (activity == null) {
+            return 0;
+        }
+        Rect windowDisplayFrame = new Rect();
+        Window window = activity.getWindow();
+        if (window == null) {
+            return 0;
+        }
+        window.getDecorView().getWindowVisibleDisplayFrame(windowDisplayFrame);
+        return windowDisplayFrame.top;
+    }
 }
