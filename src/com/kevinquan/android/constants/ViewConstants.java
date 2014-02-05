@@ -22,5 +22,7 @@ package com.kevinquan.android.constants;
  */
 public interface ViewConstants {
 
+    public static final String PROPERTY_HEIGHT = "height";
     public static final String PROPERTY_TEXT_SIZE = "textSize";
+    public static final String PROPERTY_WIDTH = "width";
 }
