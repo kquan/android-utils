@@ -37,4 +37,15 @@ public class MathUtils {
         double multiplier = Math.pow(10, decimalPlaces);
         return (int)Math.round(multiplier*initialValue)/multiplier;
     }
+    
+    /**
+     * Round a decimal to the provided number of places
+     * @param initialValue The value to round
+     * @param decimalPlaces The number of decimal places
+     * @return The rounded number
+     */
+    public static float round(float initialValue, int decimalPlaces) {
+        float multiplier = (float)Math.pow(10, decimalPlaces);
+        return (int)Math.round(multiplier*initialValue)/multiplier;
+    }
 }
