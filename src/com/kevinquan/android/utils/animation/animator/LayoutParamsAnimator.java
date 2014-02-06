@@ -15,6 +15,8 @@
  */
 package com.kevinquan.android.utils.animation.animator;
 
+import com.kevinquan.utils.PrimitiveUtils;
+
 import android.animation.ValueAnimator;
 import android.animation.ValueAnimator.AnimatorUpdateListener;
 import android.annotation.TargetApi;
@@ -30,22 +32,25 @@ import android.view.ViewGroup.LayoutParams;
  *
  */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public abstract class LayoutParamsAnimator implements AnimatorUpdateListener {
+public abstract class LayoutParamsAnimator<E> extends ValueAnimator implements AnimatorUpdateListener {
 
     @SuppressWarnings("unused")
     private static final String TAG = LayoutParamsAnimator.class.getSimpleName();
     
     protected View mView;
-    protected ValueAnimator mAnimator;
     
-    public LayoutParamsAnimator(View targetView, int... values) {
+    public LayoutParamsAnimator(View targetView, E... values) {
         mView = targetView;
-        mAnimator = getValueAnimator(values);
-        mAnimator.addUpdateListener(this);
+        init(values);
+        addUpdateListener(this);
     }
     
-    protected ValueAnimator getValueAnimator(int... values) {
-        return ValueAnimator.ofInt(values);
+    protected void init(E... values) {
+        if (values instanceof Integer[]) {
+            setIntValues(PrimitiveUtils.asPrimitive((Integer[])values));
+        } else if (values instanceof Float[]) {
+            setFloatValues(PrimitiveUtils.asPrimitive((Float[])values));            
+        }
     }
     
     @Override
@@ -70,9 +75,9 @@ public abstract class LayoutParamsAnimator implements AnimatorUpdateListener {
      * @author Kevin Quan (kevin.quan@gmail.com)
      *
      */
-    public static class HeightAnimator extends LayoutParamsAnimator{
+    public static class HeightAnimator extends LayoutParamsAnimator<Integer> {
 
-        public HeightAnimator(View targetView, int[] values) {
+        public HeightAnimator(View targetView, Integer[] values) {
             super(targetView, values);
         }
         
@@ -87,9 +92,9 @@ public abstract class LayoutParamsAnimator implements AnimatorUpdateListener {
      * @author Kevin Quan (kevin.quan@gmail.com)
      *
      */
-    public static class WidthAnimator extends LayoutParamsAnimator{
+    public static class WidthAnimator extends LayoutParamsAnimator<Integer> {
 
-        public WidthAnimator(View targetView, int[] values) {
+        public WidthAnimator(View targetView, Integer[] values) {
             super(targetView, values);
         }
         
