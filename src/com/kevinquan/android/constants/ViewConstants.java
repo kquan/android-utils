@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Kevin Quan (kevin.quan@gmail.com)
+ * Copyright 2014 Kevin Quan (kevin.quan@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,12 +17,13 @@ package com.kevinquan.android.constants;
 
 /**
  * Constants related for views, such as property names for animators
- * @author Kevin (kevin@samsungaccelerator.com)
+ * @author Kevin Quan (kevin.quan@gmail.com)
  *
  */
 public interface ViewConstants {
 
     public static final String PROPERTY_HEIGHT = "height";
+    public static final String PROPERTY_TEXT_COLOR = "textColor";
     public static final String PROPERTY_TEXT_SIZE = "textSize";
     public static final String PROPERTY_WIDTH = "width";
 }
