@@ -111,7 +111,7 @@ public class CursorUtils {
      * @param columnName The column to retrieve
      * @return The actual float, or the default value if the column doesn't exist.
      */
-    public static double safeGetFloat(Cursor result, String columnName, float defaultValue) {
+    public static float safeGetFloat(Cursor result, String columnName, float defaultValue) {
         if (result == null || TextUtils.isEmpty(columnName)) return defaultValue;
         int columnIndex = result.getColumnIndex(columnName);
         if (columnIndex == -1 || result.getColumnCount() <= columnIndex) return defaultValue;
