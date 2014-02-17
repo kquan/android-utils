@@ -104,6 +104,24 @@ public class CursorUtils {
             return defaultValue;
         }
     }
+    
+    /**
+     * Retrieve a float from the provided column in the provided result set.
+     * @param result The result set to retrieve from
+     * @param columnName The column to retrieve
+     * @return The actual float, or the default value if the column doesn't exist.
+     */
+    public static double safeGetFloat(Cursor result, String columnName, float defaultValue) {
+        if (result == null || TextUtils.isEmpty(columnName)) return defaultValue;
+        int columnIndex = result.getColumnIndex(columnName);
+        if (columnIndex == -1 || result.getColumnCount() <= columnIndex) return defaultValue;
+        try {
+            return result.getFloat(columnIndex);
+        } catch (Exception e) {
+            Log.e(TAG, "Could not retrieve float value for "+columnName,e);
+            return defaultValue;
+        }
+    }
 
     /**
      * Retrieve an integer from the provided column in the provided result set.
