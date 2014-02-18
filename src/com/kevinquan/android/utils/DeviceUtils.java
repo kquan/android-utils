@@ -153,9 +153,9 @@ public class DeviceUtils {
         if (dimensions.x == dimensions.y) {
             return Configuration.ORIENTATION_SQUARE;
         } else if (dimensions.y > dimensions.x) {
-            return Configuration.ORIENTATION_LANDSCAPE;
-        } else {
             return Configuration.ORIENTATION_PORTRAIT;
+        } else {
+            return Configuration.ORIENTATION_LANDSCAPE;
         }
     }
 
