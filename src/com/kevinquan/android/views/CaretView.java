@@ -23,6 +23,7 @@ import android.graphics.Path;
 import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 
 import com.kevinquan.android.utils.DeviceUtils;
 import com.kevinquan.android.utils.R;
@@ -163,6 +164,29 @@ public class CaretView extends View {
         
         mPath = new Path();
     }
+    
+    @SuppressWarnings("deprecation")
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        LayoutParams params = getLayoutParams();
+        if (params == null) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            return;
+        }
+        // Take user provided parameters, but if they don't exist then measure.
+        int width = -1;
+        if (params.width != LayoutParams.FILL_PARENT && params.width != LayoutParams.MATCH_PARENT && params.width != LayoutParams.WRAP_CONTENT) {
+            width = resolveSize(params.width, widthMeasureSpec);
+        }
+        int height = -1;
+        if (params.height != LayoutParams.FILL_PARENT && params.height!= LayoutParams.MATCH_PARENT && params.height!= LayoutParams.WRAP_CONTENT) {
+            height = resolveSize(params.height, heightMeasureSpec);
+        }
+        super.onMeasure(width == -1 ? widthMeasureSpec : MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+                        height== -1 ? heightMeasureSpec : MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+        
+        return;
+    }
 
     protected void onDraw(Canvas canvas) {
         canvas.save();
@@ -257,4 +281,5 @@ public class CaretView extends View {
         mPaint.setStrokeWidth(mThickness);
         return this;
     }
+
 }
