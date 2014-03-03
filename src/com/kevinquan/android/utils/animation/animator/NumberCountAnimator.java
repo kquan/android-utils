@@ -79,7 +79,7 @@ public class NumberCountAnimator<E> extends ValueAnimator implements AnimatorUpd
 
         protected void setText(Float value) {
             value = MathUtils.round(value, mDecimalsToDisplay);
-            super.setText(value);
+            mView.setText(String.format("%."+mDecimalsToDisplay+"f", value));
         }
     }
 
