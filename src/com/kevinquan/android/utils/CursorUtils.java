@@ -35,13 +35,30 @@ public class CursorUtils {
      *
      */
     public static class IndexInfo {
-        String table;
-        String column;
+        protected String mTable;
+        protected String mColumn;
         
         public IndexInfo(String table, String column) {
-            this.table = table;
-            this.column = column;
+            this.mTable = table;
+            this.mColumn = column;
         }
+        
+        public String getTable() {
+            return mTable;
+        }
+
+        public String getColumn() {
+            return mColumn;
+        }
+        
+        public String getDefaultIndexName() {
+            return "idx_"+mTable+"_"+mColumn;
+        }
+        
+        public String getDefaultCreateQuery() {
+            return "CREATE INDEX "+getDefaultIndexName()+" ON "+mTable+"("+mColumn+")";
+        }
+
     }
     
     private static final String TAG = CursorUtils.class.getSimpleName();
@@ -59,7 +76,7 @@ public class CursorUtils {
     public static void addIndex(SQLiteDatabase database, List<IndexInfo> index) {
         if (database == null || index == null) return;
         for (IndexInfo info : index) {
-            String indexQuery = "CREATE INDEX idx_"+info.table+"_"+info.column+" ON "+info.table+"("+info.column+")";
+            String indexQuery = "CREATE INDEX idx_"+info.mTable+"_"+info.mColumn+" ON "+info.mTable+"("+info.mColumn+")";
             Log.d(TAG, "Adding index: "+indexQuery);
             database.execSQL(indexQuery);
         }
