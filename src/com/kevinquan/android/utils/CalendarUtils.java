@@ -35,9 +35,9 @@ public class CalendarUtils {
     public static final SimpleDateFormat DEBUG_CALENDAR_OUTPUT_WITH_TIMEZONE = new SimpleDateFormat("MM/dd/yy HH:mm:ss.SSS Z");
     public static final SimpleDateFormat DEBUG_CALENDAR_OUTPUT = new SimpleDateFormat("MM/dd/yy HH:mm:ss.SSS");
     
-    public static final long ONE_MINUTE = 60 * 1000;
-    public static final long ONE_HOUR = 60 * ONE_MINUTE;
-    public static final long ONE_DAY = 24 * ONE_HOUR;
+    public static final int ONE_MINUTE = 60 * 1000;
+    public static final int ONE_HOUR = 60 * ONE_MINUTE;
+    public static final int ONE_DAY = 24 * ONE_HOUR;
     public static final long ONE_WEEK = 7 * ONE_DAY;
 
     /**
