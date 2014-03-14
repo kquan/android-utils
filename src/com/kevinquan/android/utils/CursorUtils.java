@@ -212,5 +212,15 @@ public class CursorUtils {
             return null;
         }
     }
+    
+    /**
+     * Perform quick tests on a cursor to check that it has results.  Will also
+     * move the cursor to the beginning of the result set (i.e., moveToFirst())
+     * @param result The cursor to examine
+     * @return True if the cursor has results and can be moved to the beginning
+     */
+    public static boolean hasResults(Cursor result) {
+        return result != null && result.getCount() > 0 && result.moveToFirst();
+    }
 
 }
