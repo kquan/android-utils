@@ -29,6 +29,7 @@ public class GoogleAnalyticsUtils {
 	    public static final String CATEGORY_PREFERENCES = "Preferences";
 		public static final String CATEGORY_ABOUT_APP = "AboutApp";
 		public static final String CATEGORY_NAVIGATION = "Navigation";
+		public static final String CATEGORY_ERRORS = "Errors";
 
 		public static final String ACTION_BUTTON_PRESS = "ButtonPress";
 		public static final String ACTION_BACK_PRESSED = "BackButtonPress";
