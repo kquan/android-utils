@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Kevin Quan (kevin.quan@gmail.com)
+ * Copyright 2014 Kevin Quan (kevin.quan@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -123,10 +123,18 @@ public class BuildUtils {
     }
     
     /**
-     * Checks whether the current environment is Ice Cream Sandwich or higher 
+     * Checks whether the current environment is Jelly Bean or higher 
      * @return True if it is
      */
     public static boolean isJellyBeanOrGreater() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
+    }
+    
+    /**
+     * Checks whether the current environment is Jelly Bean MR1 (4.2) or higher 
+     * @return True if it is
+     */
+    public static boolean isJellyBeanMR1OrGreater() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
     }
 }
