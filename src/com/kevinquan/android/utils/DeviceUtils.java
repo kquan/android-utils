@@ -44,6 +44,7 @@ public class DeviceUtils {
      */
     public interface Permissions {
         public static final String INTERNET = "android.permission.INTERNET";
+        public static final String WIFI_STATE = "android.permission.ACCESS_WIFI_STATE";
         public static final String NETWORK_STATE = "android.permission.ACCESS_NETWORK_STATE";
         public static final String WRITE_SD = "android.permission.WRITE_EXTERNAL_STORAGE";
     }
