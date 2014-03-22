@@ -15,6 +15,12 @@
  */
 package com.kevinquan.android.utils;
 
+import java.io.IOException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
+
+import com.kevinquan.utils.IOUtils;
+
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -32,6 +38,7 @@ public class BuildUtils {
     private static final String TAG = BuildUtils.class.getSimpleName();
     
     public static final int UNKNOWN_VERSION_CODE = -1;
+    protected static final String CLASSES_FILE = "classes.dex";
     
     /**
      * Retrieves the version code of the app whose context is provided
@@ -88,6 +95,49 @@ public class BuildUtils {
             Log.w(TAG, "Could not retrieve package info for package: "+context.getPackageName(), nnfe);
             return false;
         }
+    }
+    
+    /**
+     * Returns the time when the source for the provided context is built.  Note that the timestamp may
+     * not be consistent with the time on the device.
+     * @param context The context whose build time to check
+     * @return the build time, or 0 if it could not be retrieved.
+     */
+    public static long getBuildTime(Context context) {
+        if (context == null) return 0;
+        ApplicationInfo info = null;
+        try {
+        	info = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0);
+        } catch (NameNotFoundException nnfe) {
+        	Log.w(TAG, "Could not find info about package: "+context.getPackageName(), nnfe);
+        	return 0;
+        }
+        if (info == null) {
+        	Log.w(TAG, "No info returned about package: "+context.getPackageName());
+        	return 0;
+        }
+        ZipFile source = null;
+        try {
+        	source = new ZipFile(info.sourceDir);
+        	ZipEntry classes = source.getEntry(CLASSES_FILE);
+        	if (classes != null) {
+        		return classes.getTime();
+        	}
+        	return 0;
+        } catch (IOException e) {
+        	Log.e(TAG, "Could not open source for package: "+context.getPackageName(), e);
+        	return 0;
+		} finally {
+        	IOUtils.safeClose(source);
+        }
+    }
+    
+    /**
+     * Checks whether the current environment is Gingerbread or higher 
+     * @return True if it is
+     */
+    public static boolean isGingerbreadOrGreater() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD;
     }
     
     /**
