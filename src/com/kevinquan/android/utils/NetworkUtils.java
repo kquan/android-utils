@@ -71,7 +71,7 @@ public class NetworkUtils {
 			apEnabledMethod = wifiManager.getClass().getMethod("isWifiApEnabled");
 			if (apEnabledMethod != null) {
 				try {
-					return (boolean)apEnabledMethod.invoke(wifiManager);
+					return (Boolean)apEnabledMethod.invoke(wifiManager);
 				} catch (Exception e) {
 					Log.w(TAG, "Could not invoke method to check whether Wifi AP is enabled or not.", e);
 				}
