@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Kevin Quan (kevin.quan@gmail.com)
+ * Copyright 2014 Kevin Quan (kevin.quan@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,9 +35,9 @@ public class CalendarUtils {
     public static final SimpleDateFormat DEBUG_CALENDAR_OUTPUT_WITH_TIMEZONE = new SimpleDateFormat("MM/dd/yy HH:mm:ss.SSS Z");
     public static final SimpleDateFormat DEBUG_CALENDAR_OUTPUT = new SimpleDateFormat("MM/dd/yy HH:mm:ss.SSS");
     
-    public static final int ONE_MINUTE = 60 * 1000;
-    public static final int ONE_HOUR = 60 * ONE_MINUTE;
-    public static final int ONE_DAY = 24 * ONE_HOUR;
+    public static final long ONE_MINUTE = 60 * 1000;
+    public static final long ONE_HOUR = 60 * ONE_MINUTE;
+    public static final long ONE_DAY = 24 * ONE_HOUR;
     public static final long ONE_WEEK = 7 * ONE_DAY;
 
     /**
