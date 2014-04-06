@@ -17,11 +17,14 @@ package com.kevinquan.android.utils;
 
 import java.util.List;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.text.TextUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -125,4 +128,20 @@ public class PreferenceUtils {
     	showMyWebsite.setData(Uri.parse(url));
     	context.startActivity(showMyWebsite);
 	}
+	
+    /**
+     * Retrieve preferences but check whether the preference file has been updated by another process before loading
+     * @param context The context needed to load preferences
+     * @param preferenceFile The preference file to load
+     * @return The shared preferences
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static SharedPreferences getMultiProcessAwarePreferences(Context context, String preferenceFile) {
+        if (BuildUtils.isHoneycombOrGreater()) {
+            return context.getSharedPreferences(preferenceFile, Context.MODE_MULTI_PROCESS);
+        } else {
+            // In Gingerbread and below, Context.MODE_MULTI_PROCESS is by default on
+            return context.getSharedPreferences(preferenceFile, 0);
+        }
+    }
 }
