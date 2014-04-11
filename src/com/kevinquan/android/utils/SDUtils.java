@@ -16,8 +16,6 @@
 package com.kevinquan.android.utils;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 import android.os.Environment;
 import android.text.TextUtils;
@@ -52,22 +50,9 @@ public class SDUtils {
             return null;
         }
         File outputFile = new File(Environment.getExternalStorageDirectory(), destination);
-        FileUtils.ensureParentFoldersCreated(outputFile, true);
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter(outputFile);
-            writer.write(content.toString());
-            Log.d(TAG, "Content written to "+outputFile.getAbsolutePath());
+        if (FileUtils.writeContentToFile(outputFile, content)) {
             return outputFile;
-        } catch (IOException e) {
-            Log.e(TAG, "Could not output content to "+outputFile.getAbsolutePath(), e);
-            return null;
-        } finally {
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException e) {}
-            }
         }
+        return null;
     }
 }

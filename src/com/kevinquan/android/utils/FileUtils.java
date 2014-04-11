@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Kevin Quan (kevin.quan@gmail.com)
+ * Copyright 2014 Kevin Quan (kevin.quan@gmail.com)
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,12 @@ package com.kevinquan.android.utils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import com.kevinquan.utils.IOUtils;
 
 import android.util.Log;
 
@@ -128,6 +131,32 @@ public class FileUtils {
             if (!result) {
                 Log.e(TAG, "Could not create directory: "+aFile.getAbsolutePath());
             }
+        }
+    }
+    
+    /**
+     * Saves a string representation of an object to the provided destination.
+     * @param outputFile The destination file to write to
+     * @param content The content to be written to.  The result of the toString() method on the object will be written to disk.
+     * @return True if the write succeeded
+     */
+    public static boolean writeContentToFile(File outputFile, Object content) {
+        if (outputFile == null || content == null) {
+            Log.w(TAG, "Not writing anything as input is invalid.");
+            return false;
+        }
+        FileUtils.ensureParentFoldersCreated(outputFile, true);
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter(outputFile);
+            writer.write(content.toString());
+            Log.d(TAG, "Content written to "+outputFile.getAbsolutePath());
+            return true;
+        } catch (IOException e) {
+            Log.e(TAG, "Could not output content to "+outputFile.getAbsolutePath(), e);
+            return false;
+        } finally {
+            IOUtils.safeClose(writer);
         }
     }
 
