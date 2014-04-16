@@ -15,11 +15,8 @@
  */
 package com.kevinquan.android.base;
 
-import java.lang.ref.WeakReference;
-
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.util.Log;
 
 /**
@@ -27,11 +24,10 @@ import android.util.Log;
  * @author Kevin (kevin.quan@gmail.com)
  *
  */
-public abstract class AsyncTaskWithDialog<Params, Progress, Result> extends AsyncTask<Params,Progress,Result> {
+public abstract class AsyncTaskWithDialog<Params, Progress, Result> extends AsyncTaskWithContext<Params,Progress,Result> {
 
     private static final String TAG = AsyncTaskWithDialog.class.getSimpleName();
     
-    protected WeakReference<Context> mContextReference;
     protected String mMessage;
     protected ProgressDialog mDialog;
     
@@ -40,7 +36,7 @@ public abstract class AsyncTaskWithDialog<Params, Progress, Result> extends Asyn
     }
     
     public AsyncTaskWithDialog(Context context, String message) {
-        mContextReference = new WeakReference<Context>(context);
+        super(context);
         mMessage = message;
     }
     
