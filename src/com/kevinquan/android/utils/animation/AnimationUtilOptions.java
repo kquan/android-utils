@@ -83,6 +83,13 @@ public class AnimationUtilOptions {
         }
     }
     
+    public enum AnimationDirection {
+        FromLeft,
+        FromRight,
+        FromTop,
+        FromBottom,
+    }
+    
     protected Interpolator mInterpolator;
     protected long mDurationInMillis;
     protected long mStartDelayInMillis;
