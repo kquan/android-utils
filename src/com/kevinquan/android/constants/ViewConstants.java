@@ -23,6 +23,8 @@ package com.kevinquan.android.constants;
 public interface ViewConstants {
 
     public static final String PROPERTY_HEIGHT = "height";
+    public static final String PROPERTY_ROTATION_X = "rotationX";
+    public static final String PROPERTY_ROTATION_Y = "rotationY";
     public static final String PROPERTY_TEXT_COLOR = "textColor";
     public static final String PROPERTY_TEXT_SIZE = "textSize";
     public static final String PROPERTY_WIDTH = "width";
