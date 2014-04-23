@@ -65,8 +65,10 @@ public class CursorUtils {
     
     public static final long VALUE_NO_ID = -1;
     public static final int VALUE_FALSE = 0;
-    
     public static final int VALUE_TRUE = 1;
+    
+    public static final String VALUE_FALSE_LITERAL = String.valueOf(VALUE_FALSE);
+    public static final String VALUE_TRUE_LITERAL = String.valueOf(VALUE_TRUE);
     
     /**
      * Convenience method to add an index to a table following a specific pattern.  The index will be named idx_[table name]_[column name] 
