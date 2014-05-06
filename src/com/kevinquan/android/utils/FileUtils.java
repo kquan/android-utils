@@ -15,9 +15,12 @@
  */
 package com.kevinquan.android.utils;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -160,4 +163,37 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Reads a target file and as a String
+     * @param inputFile The file to read from
+     * @return The read string, or null if it could not be read.
+     */
+    public static String readFileToString(File inputFile) {
+        if (inputFile == null || !inputFile.exists()) {
+            Log.w(TAG, "Provided file is not a valid file.");
+            return null;
+        }
+        FileReader reader = null;
+        BufferedReader bufferedReader = null;
+        StringBuilder resultBuilder = new StringBuilder();
+        try {
+            reader = new FileReader(inputFile);
+            bufferedReader = new BufferedReader(reader);
+            String line = null;
+            while ((line = bufferedReader.readLine()) != null) {
+                resultBuilder.append(line);
+                resultBuilder.append(DeviceUtils.LINE_BREAK);
+            }
+        } catch (FileNotFoundException fnfe) {
+            Log.e(TAG, "Could not read from file as it does not exist: "+inputFile.getAbsolutePath(), fnfe);
+            return null;
+        } catch (IOException e) {
+            Log.e(TAG, "Could not read from file at "+inputFile.getAbsolutePath(), e);
+            return null;
+        } finally {
+            IOUtils.safeClose(reader);
+            IOUtils.safeClose(bufferedReader);
+        }
+        return resultBuilder.toString();
+    }
 }
