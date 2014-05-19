@@ -32,6 +32,26 @@ public class JSONUtils {
     public static final String TAG = JSONUtils.class.getSimpleName();
     
     /**
+     * Construct a JSON Object from the string representation of JSON
+     * @param jsonAsString The string representation of the JSON
+     * @return The JSON object or null if it could not be constructed
+     */
+    public static JSONObject safeCreateObject(String jsonAsString) {
+        if (TextUtils.isEmpty(jsonAsString)) {
+            Log.w(TAG, "No content was provided.");
+            return new JSONObject();
+        }
+        JSONObject object = null;
+        try {
+            object = new JSONObject(jsonAsString);
+        } catch (JSONException je) {
+            Log.e(TAG, "Could not construct JSON object from source string: "+jsonAsString, je);
+            return null;
+        }
+        return object;
+    }
+    
+    /**
      * Retrieve a JSON Array object stored at the provided key from the provided JSON object
      * @param obj The JSON object to retrieve from
      * @param key The key to retrieve
