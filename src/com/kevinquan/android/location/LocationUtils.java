@@ -30,7 +30,44 @@ public class LocationUtils {
 
     private static final String TAG = LocationUtils.class.getSimpleName();
     
+    public enum CardinalDirections {
+        Unknown(-1),
+        N(0),
+        NNE(22.5f),
+        NE(45),
+        ENE(67.5f),
+        E(90),
+        ESE(112.5f),
+        SE(135),
+        SSE(157.5f),
+        S(180),
+        SSW(202.5f),
+        SW(225),
+        WSW(247.5f),
+        W(270),
+        WNW(292.5f),
+        NW(315),
+        NNW(337.5f),
+        ;
+        // See http://en.wikipedia.org/wiki/Points_of_the_compass for limits 
+        protected float mMiddleDegrees;
+        
+        private CardinalDirections(float degrees) {
+            mMiddleDegrees = degrees;
+        }
+        
+        public float getDegrees() {
+            return mMiddleDegrees;
+        }
+    }
+    
+    /**
+     * Constant for no longitude or latitude value
+     */
     public static final double NO_VALUE = Double.MAX_VALUE;
+    
+    // Reference: http://en.wikipedia.org/wiki/Earth_radius
+    public static final int EARTH_MEAN_RADIUS = 6371000; // In metres
     
     public static final String CONSTRUCTED_LOCATION_PROVIDER_NAME = LocationUtils.class.getSimpleName();
     public static final String CONSTRUCTED_FROM_PREFERENCES_PROVIDER_NAME = LocationUtils.class.getSimpleName()+"FromPreferences";
@@ -129,5 +166,60 @@ public class LocationUtils {
             return result;
         }
         return null;
+    }
+    
+    /**
+     * Returns a normalized value for the bearing between the from and to location provided in the parameters 
+     * @param from The location to calculate bearing from
+     * @param to The location to calculate bearing to
+     * @return Value from [0-360] which represents the degrees of the bearing.  0 Should be north.
+     */
+    public static float getNormalizedBearing(Location from, Location to) {
+        if (from == null || to == null) {
+            return 0;
+        }
+        return normalizeBearing(from.bearingTo(to));
+    }
+    
+    /**
+     * Normalize a bearing value so that it is in the range [0,360]
+     * @param bearing The bearing to normalize
+     * @return The normalized bearing
+     */
+    public static float normalizeBearing(float bearing) {
+        if (bearing < 0) {
+            bearing += 360;
+        }
+        return bearing % 360;
+    }
+    
+    /**
+     * Returns the closest cardinal direction for the given normalized bearing
+     * @param normalizedBearing The normalized bearing
+     * @return The closest cardinal direction
+     */
+    public static CardinalDirections getCardinalDirection(float normalizedBearing) {
+        // http://stackoverflow.com/a/2131294/1339200
+        int cardinalDegrees = Math.abs(225 * (int)Math.round(10*normalizedBearing/225));
+        switch (cardinalDegrees) {
+            case 0: return CardinalDirections.N;
+            case 225: return CardinalDirections.NNE;
+            case 450: return CardinalDirections.NE;
+            case 675: return CardinalDirections.ENE;
+            case 900: return CardinalDirections.E;
+            case 1125: return CardinalDirections.ESE;
+            case 1350: return CardinalDirections.SE;
+            case 1575: return CardinalDirections.SSE;
+            case 1800: return CardinalDirections.S;
+            case 2025: return CardinalDirections.SSW;
+            case 2250: return CardinalDirections.SW;
+            case 2475: return CardinalDirections.WSW;
+            case 2700: return CardinalDirections.W;
+            case 2925: return CardinalDirections.WNW;
+            case 3150: return CardinalDirections.NW;
+            case 3375: return CardinalDirections.NNW;
+            case 3600: return CardinalDirections.N;
+        }
+        return CardinalDirections.Unknown;
     }
 }
