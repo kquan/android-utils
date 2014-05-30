@@ -70,18 +70,36 @@ public class JSONUtils {
     }
 
     /**
-     * Retrieve aJSON array stored at the provided key from the provided JSON object
+     * Retrieve a JSON array stored at the provided key from the provided JSON object
      * @param obj The JSON object to retrieve from
      * @param key The key to retrieve
      * @return the array stored in the key, or null if the key doesn't exist
      */
-    public static JSONArray safeGetArrayFromArray(JSONObject obj, String key) {
+    public static JSONArray safeGetArrayFromObject(JSONObject obj, String key) {
         if (obj == null || TextUtils.isEmpty(key)) return null;
         if (obj.has(key)) {
             try {
                 return obj.getJSONArray(key);
             } catch (JSONException e) {
                 Log.w(TAG, "Could not get Array from JSONArray from key "+key,e);
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Retrieve a JSON array stored at the provided key from the provided JSON array
+     * @param array The JSON object to retrieve from
+     * @param key The key to retrieve
+     * @return the array stored in the key, or null if the key doesn't exist
+     */
+    public static JSONArray safeGetArrayFromArray(JSONArray array, int index) {
+        if (array == null || index < 0) return null;
+        if (index < array.length() ) {
+            try {
+                return array.getJSONArray(index);
+            } catch (JSONException e) {
+                Log.w(TAG, "Could not get Array from JSONArray at index "+index, e);
             }
         }
         return null;
@@ -247,6 +265,24 @@ public class JSONUtils {
         }
         return null;
     }
+    
+    /**
+     * Retrieve a double stored at the provided index from the provided JSON array
+     * @param obj The JSON array to retrieve from
+     * @param index The index to retrieve the double from
+     * @return the double stored at the index, or the default value if the index doesn't exist
+     */
+    public static double safeGetDoubleFromArray(JSONArray obj, int index, double defaultValue) {
+        if (obj != null && obj.length() > index) {
+            try {
+                return obj.getDouble(index);
+            } catch (JSONException e) {
+                Log.w(TAG, "Could not get string from JSONArray from at index "+index,e);
+            }
+        }
+        return defaultValue;
+    }
+    
     
     /**
      * Inserts a JSON Array in the provided JSON object at the specified key.  Will overwrite any existing value for the key.  

@@ -74,6 +74,7 @@ public class SimpleRecordedLocation implements Parcelable {
         GPS(5),
         CreatedProgramatically(6),
         CreatedFromPreferences(7),
+        CreatedFromSelf(8), // From SimpleRecordedLocation.asLocation()
         ;
         
         protected static final String PLAY_SERVICES_LITERAL = "fused";
@@ -100,6 +101,7 @@ public class SimpleRecordedLocation implements Parcelable {
                 case 5: return GPS;
                 case 6: return CreatedProgramatically;
                 case 7: return CreatedFromPreferences;
+                case 8: return CreatedFromSelf;
                 default: return Unknown;
             }
         }
@@ -114,6 +116,8 @@ public class SimpleRecordedLocation implements Parcelable {
                 return LocationProviderType.CreatedProgramatically;
             } else if (CREATED_FROM_PREFERENCES_LITERAL.equals(value)) {
                 return LocationProviderType.CreatedFromPreferences;
+            } else if (TAG.equals(value)) {
+                return LocationProviderType.CreatedFromSelf;
             }
             Log.w(TAG, "Could not find location provider type with literal value: "+value);
             return LocationProviderType.Unknown;
@@ -270,7 +274,7 @@ public class SimpleRecordedLocation implements Parcelable {
     }
     
     public Location asLocation() {
-        Location location = new Location(getClass().getName());
+        Location location = new Location(TAG);
         location.setLatitude(mLatitude);
         location.setLongitude(mLongitude);
         location.setAccuracy(mAccuracy);
