@@ -46,7 +46,7 @@ public class JSONUtils {
             object = new JSONObject(jsonAsString);
         } catch (JSONException je) {
             Log.e(TAG, "Could not construct JSON object from source string: "+jsonAsString, je);
-            return null;
+            return new JSONObject();
         }
         return object;
     }
