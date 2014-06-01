@@ -222,4 +222,25 @@ public class LocationUtils {
         }
         return CardinalDirections.Unknown;
     }
+    
+    /**
+     * Checks whether the provided latitude/longitude values are valid
+     * @param latitude The latitude to check
+     * @param latitude The longitude to check
+     * @return True if both values are valid
+     */
+    public static boolean isValid(double latitude, double longitude) {
+        if (latitude == NO_VALUE || longitude == NO_VALUE) {
+            return false;
+        }
+        if (Math.abs(latitude) > 90) {
+            // Latitude can go from -90 to +90
+            return false;
+        }
+        if (Math.abs(longitude) > 180) {
+            // Latitude can go from -180 to +180
+            return false;
+        }
+        return true;
+    }
 }
