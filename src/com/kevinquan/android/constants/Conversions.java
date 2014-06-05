@@ -31,4 +31,10 @@ public interface Conversions {
         public static double TO_MILES = 1/1609.34;
         
     }
+    
+    public interface MetresPerSecond {
+        
+        public static double TO_KILOMETERS_PER_HOUR = 60d*60d/1000d;
+        
+    }
 }
