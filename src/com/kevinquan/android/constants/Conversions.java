@@ -34,7 +34,20 @@ public interface Conversions {
     
     public interface MetresPerSecond {
         
-        public static double TO_KILOMETERS_PER_HOUR = 60d*60d/1000d;
+        public static double TO_KILOMETRES_PER_HOUR = 60d*60d/1000d;
+        
+    }
+    
+    public interface MetresPerMillis {
+        
+        public static double TO_KILOMETRES_PER_HOUR = 1000*60*60/1000;
+        
+    }
+    
+    public interface KilometresPerHour {
+        
+        public static double TO_METRES_PER_MILLIS = 1/MetresPerMillis.TO_KILOMETRES_PER_HOUR;
+        public static double TO_METRES_PER_SECOND = 1/MetresPerSecond.TO_KILOMETRES_PER_HOUR;
         
     }
 }
