@@ -71,8 +71,19 @@ limitations under the License.
     }&#13;
 </template>
 <template 
+    autoinsert="true" 
+    context="java" 
+    deleted="false" 
+    description="Creates a CREATOR field for Parcelable classes" 
+    enabled="true" 
+    name="CREATOR"
+>public static final Parcelable.Creator&lt;${enclosing_type}&gt; CREATOR = new Parcelable.Creator&lt;${enclosing_type}&gt;() {&#13;
+    public ${enclosing_type} createFromParcel(Parcel in) { return new ${enclosing_type}(in); }&#13;
+    public ${enclosing_type}[] newArray(int size) { return new ${enclosing_type}[size]; }&#13;
+};</template>
+<template 
 	autoinsert="true" 
-	context="java" 
+	context="java-statements" 
 	deleted="false" 
 	description="Creates an empty setOnClickListener for a View" 
 	enabled="true" 
@@ -86,7 +97,7 @@ limitations under the License.
 });</template>
 <template 
 	autoinsert="true" 
-	context="java" 
+	context="java-statements" 
 	deleted="false" 
 	description="Creates an empty setOnItemClickListener for a ListView" 
 	enabled="true" 
