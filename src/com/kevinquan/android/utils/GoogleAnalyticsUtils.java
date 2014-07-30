@@ -41,6 +41,7 @@ public class GoogleAnalyticsUtils {
 		public static final String ACTION_ERROR = "Error";
 		public static final String ACTION_SEARCH = "Search";
 		public static final String ACTION_SELECTION = "Select";
+        public static final String ACTION_ORIENTATION = "Orientation";
 		
 		public static final String ERROR_NO_NETWORK = "No Network";
 		
