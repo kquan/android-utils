@@ -371,7 +371,7 @@ public class JSONUtils {
         try {
             obj.put(key, value);
         } catch (JSONException e) {
-            Log.w(TAG, "Could not put long with key "+key);
+            Log.w(TAG, "Could not put long with key "+key,e);
         }
     }
 
@@ -402,7 +402,7 @@ public class JSONUtils {
         try {
             obj.put(key, value);
         } catch (JSONException e) {
-            Log.w(TAG, "Could not put string with key "+key);
+            Log.w(TAG, "Could not put string with key "+key,e);
         }
     }
 }
