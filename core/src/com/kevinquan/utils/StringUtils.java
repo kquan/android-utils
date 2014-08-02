@@ -23,6 +23,7 @@ public class StringUtils {
 	private static final String TAG = StringUtils.class.getSimpleName();
 	
 	public static final String UTF8_LITERAL = "UTF-8";
+	public static final String SPACE_LITERAL = "\u0020";
 	
 	/**
 	 * Compares two, possibly null strings for equality.
