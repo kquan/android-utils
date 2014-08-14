@@ -19,7 +19,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 /**
@@ -104,6 +104,7 @@ public class ByteUtils {
      * @param input The byte array to convert
      * @return The hexadecimal version of the byte array
      */
+    @SuppressLint("DefaultLocale")
     public static String convertToHexString(byte[] input) {
         if (input == null || input.length == 0) {
             return new String();
