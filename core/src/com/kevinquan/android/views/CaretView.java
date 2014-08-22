@@ -16,6 +16,7 @@
 package com.kevinquan.android.views;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -79,7 +80,8 @@ public class CaretView extends View {
     
     protected static final int DEFAULT_THICKNESS_IN_DP = 1;
     
-    protected int mColor;
+    protected ColorStateList mColorStateList;
+    protected int mDefaultColor;
     protected Orientation mOrientation;
     protected float mThickness;
     protected Style mStyle;
@@ -109,8 +111,8 @@ public class CaretView extends View {
      * Gets the color that the caret will be drawn with
      * @return The color of the caret
      */
-    public int getColor() {
-        return mColor;
+    public ColorStateList getColor() {
+        return mColorStateList;
     }
     
     /**
@@ -140,21 +142,24 @@ public class CaretView extends View {
     protected void init(AttributeSet attrs) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CaretView);
-            mColor = a.getInt(R.styleable.CaretView_color, getContext().getResources().getColor(android.R.color.primary_text_light));
+            mColorStateList = a.getColorStateList(R.styleable.CaretView_color);
             mOrientation = Orientation.fromOrdinal(a.getInt(R.styleable.CaretView_orientation, Orientation.NoRotation.ordinal()));
             mThickness = a.getDimensionPixelSize(R.styleable.CaretView_thickness, DeviceUtils.convertDpToPixels(getContext(), DEFAULT_THICKNESS_IN_DP));
             mStyle = Style.fromOrdinal(a.getInt(R.styleable.CaretView_style, Style.Outline.ordinal()));
             a.recycle();
         } else {
-            mColor = getContext().getResources().getColor(android.R.color.primary_text_light);
             mOrientation = Orientation.NoRotation;
             mThickness = DeviceUtils.convertDpToPixels(getContext(), DEFAULT_THICKNESS_IN_DP);
             mStyle = Style.Outline;
         }
         
+        mDefaultColor = getContext().getResources().getColor(android.R.color.primary_text_light);
+        if (mColorStateList == null) {
+            mColorStateList = ColorStateList.valueOf(mDefaultColor);
+        }
+        
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
-        mPaint.setColor(mColor);
         mPaint.setStrokeWidth(mThickness);
         mPaint.setStyle(mStyle.getPaintStyle());
         
@@ -188,6 +193,7 @@ public class CaretView extends View {
         return;
     }
 
+    @Override
     protected void onDraw(Canvas canvas) {
         canvas.save();
         
@@ -236,6 +242,14 @@ public class CaretView extends View {
         
         canvas.restore();
     }
+    
+    @Override
+    protected void drawableStateChanged() {
+        super.drawableStateChanged();
+        mPaint.setColor(mColorStateList.getColorForState(getDrawableState(), mDefaultColor));
+        // This seems necessary to apply the new color
+        invalidate();
+    }
 
     /**
      * Sets the color that the caret will be drawn with
@@ -243,8 +257,17 @@ public class CaretView extends View {
      * @return This view for chaining
      */
     public CaretView setColor(int color) {
-        mColor = color;
-        mPaint.setColor(mColor);
+        mColorStateList = ColorStateList.valueOf(color);
+        return this;
+    }
+    
+    /**
+     * Sets the color that the caret will be drawn with
+     * @param color The new color of the caret
+     * @return This view for chaining
+     */
+    public CaretView setColor(ColorStateList color) {
+        mColorStateList = color;
         return this;
     }
 
