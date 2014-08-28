@@ -40,6 +40,7 @@ public class AbstractGoogleAnalyticsHelper implements BaseAnalytics {
     // Temporary: Copied from libGoogleAnalyticsServices.jar as Fields type does not exist in Play Services yet.
     private interface Fields {
     	static final java.lang.String SCREEN_NAME = "&cd";
+    	static final java.lang.String USER_ID = "&uid";
     }
     
     private static final int NO_CONFIGURATION_FILE_ID = -1;
@@ -48,8 +49,15 @@ public class AbstractGoogleAnalyticsHelper implements BaseAnalytics {
     protected static AbstractGoogleAnalyticsHelper mInstance;
     protected Tracker mConfiguredTracker;
     
+    protected String mUserId;
+    
     public AbstractGoogleAnalyticsHelper(int configurationFileId) { 
     	mConfigurationFileId = configurationFileId;
+    }
+    
+    public AbstractGoogleAnalyticsHelper setUserId(String userId) {
+        mUserId = userId;
+        return this;
     }
     
     protected Tracker getTracker(Context context) {
@@ -62,6 +70,9 @@ public class AbstractGoogleAnalyticsHelper implements BaseAnalytics {
         		return null;
         	}
         	mConfiguredTracker = GoogleAnalytics.getInstance(context).newTracker(mConfigurationFileId);
+        	if (!TextUtils.isEmpty(mUserId)) {
+        	    mConfiguredTracker.set(Fields.USER_ID, mUserId);
+        	}
     	}
     	return mConfiguredTracker;
     }
