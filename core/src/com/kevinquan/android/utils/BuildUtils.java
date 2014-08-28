@@ -187,4 +187,12 @@ public class BuildUtils {
     public static boolean isJellyBeanMR1OrGreater() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1;
     }
+    
+    /**
+     * Checks whether the current environment is KitKat (4.4) or higher 
+     * @return True if it is
+     */
+    public static boolean isKitKatOrGreater() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+    }
 }
