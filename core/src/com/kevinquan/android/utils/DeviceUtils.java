@@ -22,6 +22,8 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.os.Build;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -35,6 +37,7 @@ import android.view.inputmethod.InputMethodManager;
  * @author Kevin Quan (kevin.quan@gmail.com)
  *
  */
+@SuppressLint("NewApi")
 public class DeviceUtils {
 
     /**
@@ -169,12 +172,57 @@ public class DeviceUtils {
         if (activity == null) {
             return 0;
         }
-        Rect windowDisplayFrame = new Rect();
-        Window window = activity.getWindow();
-        if (window == null) {
+        int resourceId = activity.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return activity.getResources().getDimensionPixelSize(resourceId);
+        } else {
+            // Will possibly not work for translucent or immersive UI.
+            Rect windowDisplayFrame = new Rect();
+            Window window = activity.getWindow();
+            if (window == null) {
+                return 0;
+            }
+            window.getDecorView().getWindowVisibleDisplayFrame(windowDisplayFrame);
+            return windowDisplayFrame.top;
+        }
+    }
+    
+    /**
+     * Retrieve the height of the navigation bar
+     * @param activity A visual activity to use to get a window
+     * @return The height of the navigation bar, or 0 if it could not be computed.
+     */
+    public static int getNavigationBarHeight(Activity activity) {
+        if (activity == null) {
             return 0;
         }
-        window.getDecorView().getWindowVisibleDisplayFrame(windowDisplayFrame);
-        return windowDisplayFrame.top;
+        int resourceId = activity.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return activity.getResources().getDimensionPixelSize(resourceId);
+        } else {
+            // TODO: Try and calculate from display height and display frame; but this would only work in portrait orientation
+            return 0;
+        }
+    }
+    
+    /**
+     * Try and return a unique ID for the device
+     * @param activity The current context
+     * @return A unique ID or null if none could be found
+     */
+    public static String getDeviceId(Context context) {
+        if (context == null) {
+            return null;
+        }
+        String deviceId = null;
+        try {
+            deviceId = Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+        } catch (Exception e) {
+            Log.e(TAG, "Could not get device id from Settings", e);
+        }
+        if (TextUtils.isEmpty(deviceId) && BuildUtils.isGingerbreadOrGreater()) {
+            return Build.SERIAL;
+        }
+        return null;
     }
 }
