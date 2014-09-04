@@ -17,6 +17,7 @@ package com.kevinquan.utils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.zip.ZipFile;
@@ -60,6 +61,21 @@ public class IOUtils {
 			// Squelched.
 		}
 	}
+	
+	   /**
+     * Close an outputstream if necessary.  Exceptions are squelched
+     * @param stream The stream to close
+     */
+    public static void safeClose(OutputStream stream) {
+        if (stream == null) {
+            return;
+        }
+        try {
+            stream.close();
+        } catch (IOException ioe) {
+            // Squelched.
+        }
+    }
 	
 	/**
      * Close a writer if necessary.  Exceptions are squelched
