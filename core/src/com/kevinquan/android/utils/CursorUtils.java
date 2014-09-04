@@ -78,9 +78,8 @@ public class CursorUtils {
     public static void addIndex(SQLiteDatabase database, List<IndexInfo> index) {
         if (database == null || index == null) return;
         for (IndexInfo info : index) {
-            String indexQuery = "CREATE INDEX idx_"+info.mTable+"_"+info.mColumn+" ON "+info.mTable+"("+info.mColumn+")";
-            Log.d(TAG, "Adding index: "+indexQuery);
-            database.execSQL(indexQuery);
+            Log.d(TAG, "Adding index: "+info.getDefaultIndexName());
+            database.execSQL(info.getDefaultCreateQuery());
         }
     }
 
