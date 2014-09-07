@@ -36,6 +36,7 @@ public class GoogleAnalyticsUtils {
 		public static final String ACTION_BACK_PRESSED = "BackButtonPress";
 		public static final String ACTION_CLICK = "Tap";
 		public static final String ACTION_VIEW = "View";
+		public static final String ACTION_SWIPE = "Swipe";
 		public static final String ACTION_EDIT = "Edit";
 		public static final String ACTION_ENABLE = "Enable";
 		public static final String ACTION_DISABLE = "Disable";
