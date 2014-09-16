@@ -77,7 +77,7 @@ public abstract class LayoutParamsAnimator<E> extends ValueAnimator implements A
      */
     public static class HeightAnimator extends LayoutParamsAnimator<Integer> {
 
-        public HeightAnimator(View targetView, Integer[] values) {
+        public HeightAnimator(View targetView, Integer... values) {
             super(targetView, values);
         }
         
@@ -94,7 +94,7 @@ public abstract class LayoutParamsAnimator<E> extends ValueAnimator implements A
      */
     public static class WidthAnimator extends LayoutParamsAnimator<Integer> {
 
-        public WidthAnimator(View targetView, Integer[] values) {
+        public WidthAnimator(View targetView, Integer... values) {
             super(targetView, values);
         }
         
