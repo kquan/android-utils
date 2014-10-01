@@ -23,6 +23,7 @@ import android.util.Log;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.StandardExceptionParser;
 import com.google.android.gms.analytics.Tracker;
 import com.kevinquan.android.utils.DeviceUtils;
 import com.kevinquan.android.utils.GoogleAnalyticsUtils.BaseAnalytics;
@@ -140,6 +141,18 @@ public class AbstractGoogleAnalyticsHelper implements BaseAnalytics {
     		tracker.send(builder.build());
     	} else {
         	Log.w(TAG, "Could not log timing for "+category+"/"+action+" as tracker could not be retrieved.");
+    	}
+    	return tracker;
+    }
+    
+    public Tracker sendException(Context context, Throwable throwable, String description, boolean isFatal) {
+    	HitBuilders.ExceptionBuilder builder = new HitBuilders.ExceptionBuilder();
+    	builder.setDescription((!TextUtils.isEmpty(description) ? description : "")+": "+new StandardExceptionParser(context, null).getDescription(Thread.currentThread().getName(), throwable)).setFatal(isFatal);
+    	Tracker tracker = getTracker(context);
+    	if (tracker != null) {
+    		tracker.send(builder.build());
+    	} else {
+        	Log.w(TAG, "Could not log exception as tracker could not be retrieved.");
     	}
     	return tracker;
     }
