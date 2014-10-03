@@ -32,6 +32,24 @@ public class JSONUtils {
     public static final String TAG = JSONUtils.class.getSimpleName();
     
     /**
+     * Returns a "pretty print" string version of the JSONArray
+     * @param array The array to pretty print
+     * @param indentation The amount of indentation for each level
+     * @return A pretty string 
+     */
+    public static String prettyPrint(JSONArray array, int indentation) {
+        if (array == null) {
+            return new String();
+        }
+        try {
+            return array.toString(indentation);
+        } catch (JSONException je) {
+            Log.w(TAG, "Could not pretty print JSON: "+array.toString());
+            return new String();
+        }
+    }
+    
+    /**
      * Returns a "pretty print" string version of the JSONObject 
      * @param obj The object to pretty print
      * @param indentation The amount of indentation for each level
