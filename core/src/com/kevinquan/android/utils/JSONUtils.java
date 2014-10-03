@@ -32,6 +32,24 @@ public class JSONUtils {
     public static final String TAG = JSONUtils.class.getSimpleName();
     
     /**
+     * Returns a "pretty print" string version of the JSONObject 
+     * @param obj The object to pretty print
+     * @param indentation The amount of indentation for each level
+     * @return A pretty string 
+     */
+    public static String prettyPrint(JSONObject obj, int indentation) {
+        if (obj == null) {
+            return new String();
+        }
+        try {
+            return obj.toString(indentation);
+        } catch (JSONException je) {
+            Log.w(TAG, "Could not pretty print JSON: "+obj.toString());
+            return new String();
+        }
+    }
+    
+    /**
      * Construct a JSON Object from the string representation of JSON
      * @param jsonAsString The string representation of the JSON
      * @return The JSON object or null if it could not be constructed
@@ -50,7 +68,7 @@ public class JSONUtils {
         }
         return object;
     }
-    
+
     /**
      * Retrieve a JSON Array object stored at the provided key from the provided JSON object
      * @param obj The JSON object to retrieve from
@@ -64,24 +82,6 @@ public class JSONUtils {
                 return obj.getJSONArray(key);
             } catch (JSONException e) {
                 Log.w(TAG, "Could not get JSONArray from key "+key,e);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Retrieve a JSON array stored at the provided key from the provided JSON object
-     * @param obj The JSON object to retrieve from
-     * @param key The key to retrieve
-     * @return the array stored in the key, or null if the key doesn't exist
-     */
-    public static JSONArray safeGetArrayFromObject(JSONObject obj, String key) {
-        if (obj == null || TextUtils.isEmpty(key)) return null;
-        if (obj.has(key)) {
-            try {
-                return obj.getJSONArray(key);
-            } catch (JSONException e) {
-                Log.w(TAG, "Could not get Array from JSONArray from key "+key,e);
             }
         }
         return null;
@@ -100,6 +100,24 @@ public class JSONUtils {
                 return array.getJSONArray(index);
             } catch (JSONException e) {
                 Log.w(TAG, "Could not get Array from JSONArray at index "+index, e);
+            }
+        }
+        return null;
+    }
+    
+    /**
+     * Retrieve a JSON array stored at the provided key from the provided JSON object
+     * @param obj The JSON object to retrieve from
+     * @param key The key to retrieve
+     * @return the array stored in the key, or null if the key doesn't exist
+     */
+    public static JSONArray safeGetArrayFromObject(JSONObject obj, String key) {
+        if (obj == null || TextUtils.isEmpty(key)) return null;
+        if (obj.has(key)) {
+            try {
+                return obj.getJSONArray(key);
+            } catch (JSONException e) {
+                Log.w(TAG, "Could not get Array from JSONArray from key "+key,e);
             }
         }
         return null;
@@ -142,6 +160,23 @@ public class JSONUtils {
     }
     
     /**
+     * Retrieve a double stored at the provided index from the provided JSON array
+     * @param obj The JSON array to retrieve from
+     * @param index The index to retrieve the double from
+     * @return the double stored at the index, or the default value if the index doesn't exist
+     */
+    public static double safeGetDoubleFromArray(JSONArray obj, int index, double defaultValue) {
+        if (obj != null && obj.length() > index) {
+            try {
+                return obj.getDouble(index);
+            } catch (JSONException e) {
+                Log.w(TAG, "Could not get string from JSONArray from at index "+index,e);
+            }
+        }
+        return defaultValue;
+    }
+
+    /**
      * Retrieve an integer stored at the provided key from the provided JSON object
      * @param obj The JSON object to retrieve from
      * @param key The key to retrieve
@@ -176,7 +211,7 @@ public class JSONUtils {
         }
         return null;
     }
-
+    
     /**
      * Retrieve a JSON object stored at the provided index from the provided JSON Array object
      * @param obj The JSON Array object to retrieve from
@@ -249,6 +284,7 @@ public class JSONUtils {
         return null;
     }
     
+    
     /**
      * Retrieve a string stored at the provided index from the provided JSON array
      * @param obj The JSON array to retrieve from
@@ -265,24 +301,6 @@ public class JSONUtils {
         }
         return null;
     }
-    
-    /**
-     * Retrieve a double stored at the provided index from the provided JSON array
-     * @param obj The JSON array to retrieve from
-     * @param index The index to retrieve the double from
-     * @return the double stored at the index, or the default value if the index doesn't exist
-     */
-    public static double safeGetDoubleFromArray(JSONArray obj, int index, double defaultValue) {
-        if (obj != null && obj.length() > index) {
-            try {
-                return obj.getDouble(index);
-            } catch (JSONException e) {
-                Log.w(TAG, "Could not get string from JSONArray from at index "+index,e);
-            }
-        }
-        return defaultValue;
-    }
-    
     
     /**
      * Inserts a JSON Array in the provided JSON object at the specified key.  Will overwrite any existing value for the key.  
@@ -359,7 +377,7 @@ public class JSONUtils {
             Log.w(TAG, "Could not put int with key "+key,e);
         }
     }
-    
+
     /**
      * Inserts a long in the provided JSON object at the specified key.  Will overwrite any existing value for the key
      * @param obj The JSON object to write to
@@ -374,7 +392,7 @@ public class JSONUtils {
             Log.w(TAG, "Could not put long with key "+key,e);
         }
     }
-
+    
     /**
      * Inserts a JSON object in the provided JSON object at the specified key.  Will overwrite any existing value for the key
      * A null object can be stored.
