@@ -51,6 +51,7 @@ public class AbstractGoogleAnalyticsHelper implements BaseAnalytics {
     protected Tracker mConfiguredTracker;
     
     protected String mUserId;
+    protected boolean mEnableAdvertisingIdCollection;
     
     public AbstractGoogleAnalyticsHelper(int configurationFileId) { 
     	mConfigurationFileId = configurationFileId;
@@ -59,6 +60,11 @@ public class AbstractGoogleAnalyticsHelper implements BaseAnalytics {
     public AbstractGoogleAnalyticsHelper setUserId(String userId) {
         mUserId = userId;
         return this;
+    }
+    
+    public AbstractGoogleAnalyticsHelper setEnableAdvertisingIdCollection(boolean enable) {
+    	mEnableAdvertisingIdCollection = enable;
+    	return this;
     }
     
     protected Tracker getTracker(Context context) {
@@ -73,6 +79,9 @@ public class AbstractGoogleAnalyticsHelper implements BaseAnalytics {
         	mConfiguredTracker = GoogleAnalytics.getInstance(context).newTracker(mConfigurationFileId);
         	if (!TextUtils.isEmpty(mUserId)) {
         	    mConfiguredTracker.set(Fields.USER_ID, mUserId);
+        	}
+        	if (mEnableAdvertisingIdCollection) {
+        		mConfiguredTracker.enableAdvertisingIdCollection(true);
         	}
     	}
     	return mConfiguredTracker;
