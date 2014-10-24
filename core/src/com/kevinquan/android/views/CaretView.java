@@ -142,9 +142,9 @@ public class CaretView extends View {
     protected void init(AttributeSet attrs) {
         if (attrs != null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CaretView);
-            mColorStateList = a.getColorStateList(R.styleable.CaretView_color);
+            mColorStateList = a.getColorStateList(R.styleable.CaretView_android_color);
             mOrientation = Orientation.fromOrdinal(a.getInt(R.styleable.CaretView_orientation, Orientation.NoRotation.ordinal()));
-            mThickness = a.getDimensionPixelSize(R.styleable.CaretView_thickness, DeviceUtils.convertDpToPixels(getContext(), DEFAULT_THICKNESS_IN_DP));
+            mThickness = a.getDimensionPixelSize(R.styleable.CaretView_outlineThickness, DeviceUtils.convertDpToPixels(getContext(), DEFAULT_THICKNESS_IN_DP));
             mStyle = Style.fromOrdinal(a.getInt(R.styleable.CaretView_style, Style.Outline.ordinal()));
             a.recycle();
         } else {

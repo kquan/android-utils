@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources
+    xmlns:kquan="http://schemas.android.com/apk/com.kevinquan.android.utils">
     
     <!-- Define the following attributes once as they are pretty common -->
-    <attr name="color" format="color" />
 
     <declare-styleable name="CaretView">
-        <attr name="color" />
+        <attr name="android:color" />
         <attr name="orientation" format="enum">
             <enum name="top" value="0" />
             <enum name="right" value="1" />
             <enum name="bottom" value="2" />
             <enum name="left" value="3" />
         </attr>
-        <attr name="thickness" format="dimension" />
+		<attr name="outlineThickness" format="dimension"/>
         <attr name="style" format="enum">
             <enum name="outline" value="0" />
             <enum name="filled" value="1" />
