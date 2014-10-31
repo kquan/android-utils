@@ -8,4 +8,11 @@
     
     <!-- As defined: http://developer.android.com/design/style/metrics-grids.html -->
     <dimen name="touch_rhythm_size">48dp</dimen>
+    
+    <!-- Material design constants: http://android-developers.blogspot.ca/2014/10/material-design-on-android-checklist.html -->
+    <dimen name="material_keyline1">16dp</dimen>
+    <dimen name="material_keyline2">72dp</dimen>
+    <dimen name="material_keyline3">16dp</dimen>
+    <dimen name="material_grid_size">8dp</dimen>
+    <dimen name="material_max_drawer_width">320dp</dimen>
 </resources>
