@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kevinquan.google.play.activityrecoginition;
+package com.kevinquan.google.activityrecoginition;
 
 import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
 import com.google.android.gms.location.ActivityRecognitionClient;

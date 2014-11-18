@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kevinquan.google.play.activityrecoginition.model;
+package com.kevinquan.google.activityrecoginition.model;
 
 import java.util.ArrayList;
 import java.util.Collections;

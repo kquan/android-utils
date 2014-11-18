@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kevinquan.google.play.activityrecoginition.model;
+package com.kevinquan.google.activityrecoginition.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 import com.kevinquan.android.utils.JSONUtils;
-import com.kevinquan.google.play.activityrecoginition.model.Motion.MotionType;
+import com.kevinquan.google.activityrecoginition.model.Motion.MotionType;
 
 /**
  * Models a series of motions reported by Google Play activity recognition at a certain instance in time.
