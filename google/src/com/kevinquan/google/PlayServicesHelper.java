@@ -15,6 +15,7 @@
  */
 package com.kevinquan.google;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -30,6 +31,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 public class PlayServicesHelper {
 
     static final String TAG = PlayServicesHelper.class.getSimpleName();
+    
+    protected static final int TUTORIAL_PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     
     public static boolean hasUseableGooglePlayServices(Context context) {
         int result = GooglePlayServicesUtil.isGooglePlayServicesAvailable(context);
@@ -55,5 +58,20 @@ public class PlayServicesHelper {
         }
         Log.w(TAG, "Unknown result code returned: "+result);
         return false;
+    }
+    
+    public static boolean checkAndDownloadPlayServices(Activity activity) {
+    	if (activity == null) {
+    		return false;
+    	}
+    	int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(activity);
+    	if (ConnectionResult.SUCCESS != resultCode) {
+    		if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+    			GooglePlayServicesUtil.getErrorDialog(resultCode, activity, TUTORIAL_PLAY_SERVICES_RESOLUTION_REQUEST);
+    		}
+    		return false;
+    	} else {
+    		return true;
+    	}
     }
 }
