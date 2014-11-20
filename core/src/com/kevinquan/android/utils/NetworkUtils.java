@@ -21,6 +21,7 @@ import java.lang.reflect.Method;
 import com.kevinquan.android.utils.DeviceUtils.Permissions;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -37,7 +38,7 @@ public class NetworkUtils {
     
     // Change this flag to true if we want all network access to be off.
     public static boolean DEBUG_NETWORK_OFF_FLAG = false;
-
+	
     /**
      * Checks whether there is an available network connection (e.g., on which to send data)
      * @param context The context to use to check the network connection
@@ -50,6 +51,19 @@ public class NetworkUtils {
         return !DEBUG_NETWORK_OFF_FLAG && netInfo != null && netInfo.isConnected();
     }
     
+    /**
+     * Checks whether wifi is enabled (i.e., turned on).  This does not check whether the device is connected to a wifi network.
+     * @param context The context to be used to check the wifi status
+     * @return True if wifi is on.
+     */
+    public static boolean isWifiEnabled(Context context) {
+    	if (context == null) {
+    		return false;
+    	}
+    	WifiManager manager = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
+    	return manager != null && manager.isWifiEnabled();
+    }
+
     /**
      * Attempts to check whether wifi hotspot is enabled on the device.  There is an API to do this,
      * but currently it is internal to Android.  To work around this, we use reflection to invoke the method.
@@ -80,5 +94,21 @@ public class NetworkUtils {
 			Log.w(TAG, "Could not check whether hotspot is enabled.", nsme);
 		}
 		return false;
+    }
+    
+    /**
+     * Retrieves an intent to open the settings for Wi-Fi
+     * @param context The context to construct the intent with
+     * @return The intent or null if no such location exists
+     */
+    public static Intent getWifiSettingsIntent(Context context) {
+    	if (context == null) {
+    		return null;
+    	}
+    	Intent intent = new Intent(android.provider.Settings.ACTION_WIFI_SETTINGS);
+    	if (DeviceUtils.hasActivityResolverFor(context, intent)) {
+    		return intent;
+    	}
+    	return null;
     }
 }

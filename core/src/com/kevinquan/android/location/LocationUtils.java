@@ -15,6 +15,10 @@
  */
 package com.kevinquan.android.location;
 
+import com.kevinquan.android.utils.DeviceUtils;
+
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
 import android.text.TextUtils;
@@ -242,5 +246,21 @@ public class LocationUtils {
             return false;
         }
         return true;
+    }
+    
+    /**
+     * Retrieves an intent to open the settings for location
+     * @param context The context to construct the intent with
+     * @return The intent or null if no such location exists
+     */
+    public static Intent getLocationSettingsIntent(Context context) {
+    	if (context == null) {
+    		return null;
+    	}
+    	Intent intent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+    	if (DeviceUtils.hasActivityResolverFor(context, intent)) {
+    		return intent;
+    	}
+    	return null;
     }
 }

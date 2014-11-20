@@ -329,7 +329,7 @@ public class SimpleRecordedLocation implements Parcelable {
 		return output;
 	}
 	
-	public ContentValues getInsertContentValues() {
+	public ContentValues getContentValues() {
         ContentValues values = new ContentValues();
         values.put(COLUMN_LATITUDE, getLatitude());
         values.put(COLUMN_LONGITUDE, getLongitude());

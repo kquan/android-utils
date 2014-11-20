@@ -15,10 +15,14 @@
  */
 package com.kevinquan.android.utils;
 
+import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -46,6 +50,8 @@ public class DeviceUtils {
      *
      */
     public interface Permissions {
+    	
+    	public static final String GET_ACCOUNTS = "android.permission.GET_ACCOUNTS";
         public static final String INTERNET = "android.permission.INTERNET";
         public static final String WIFI_STATE = "android.permission.ACCESS_WIFI_STATE";
         public static final String NETWORK_STATE = "android.permission.ACCESS_NETWORK_STATE";
@@ -224,5 +230,19 @@ public class DeviceUtils {
             return Build.SERIAL;
         }
         return null;
+    }
+    
+    /**
+     * Checks whether an intent to open an activity can be handled by anything on this device
+     * @param context The context to check with
+     * @param intent The intent to check
+     * @return True if the intent can be handled
+     */
+    public static boolean hasActivityResolverFor(Context context, Intent intent) {
+    	if (intent == null || context == null) {
+    		return false;
+    	}
+    	List<ResolveInfo> resolvers = context.getPackageManager().queryIntentActivities(intent, 0);
+    	return resolvers != null && !resolvers.isEmpty();
     }
 }
