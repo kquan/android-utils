@@ -19,7 +19,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import android.annotation.SuppressLint;
+import java.util.Locale;
+
 import android.util.Log;
 
 /**
@@ -104,7 +105,6 @@ public class ByteUtils {
      * @param input The byte array to convert
      * @return The hexadecimal version of the byte array
      */
-    @SuppressLint("DefaultLocale")
     public static String convertToHexString(byte[] input) {
         if (input == null || input.length == 0) {
             return new String();
@@ -112,8 +112,8 @@ public class ByteUtils {
         // From http://stackoverflow.com/a/13006907/1339200
         StringBuilder sb = new StringBuilder();
         for (byte b : input) {
-           sb.append(String.format("%02x", b&0xff));
+           sb.append(String.format(Locale.ENGLISH, "%02x", b&0xff));
         }
-        return sb.toString().toLowerCase();
+        return sb.toString().toLowerCase(Locale.ENGLISH);
      }
 }
