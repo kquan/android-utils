@@ -240,6 +240,17 @@ public class SimpleRecordedLocation implements Parcelable {
     	mRecordedAt = JSONUtils.safeGetLong(object, JSON_FIELD_RECORDED_AT, 0);
     	mProvider = LocationProviderType.fromDbId(JSONUtils.safeGetInt(object, JSON_FIELD_PROVIDER_ID, LocationProviderType.Unknown.getDbId()));
     }
+    
+    public SimpleRecordedLocation(SimpleRecordedLocation original) {
+        mLatitude = original.mLatitude;
+        mLongitude = original.mLongitude;
+        mAccuracy = original.mAccuracy;
+        mAltitude = original.mAltitude;
+        mBearing = original.mBearing;
+        mSpeed = original.mSpeed;
+        mRecordedAt = original.mRecordedAt;
+        mProvider = original.mProvider;
+    }
 
     public double getLatitude() {
         return mLatitude;

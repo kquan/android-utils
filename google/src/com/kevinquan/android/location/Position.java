@@ -60,6 +60,10 @@ public class Position extends SimpleRecordedLocation {
     public Position(Parcel in) {
         super(in);
     }
+    
+    public Position(Position original) {
+    	super(original);
+    }
 
     public LatLng asLatLng() {
         return new LatLng(mLatitude, mLongitude);
