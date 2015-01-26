@@ -23,7 +23,13 @@ proguard/
 *.ipr
 *.iws
 .idea/
+/.idea/workspace.xml
+/.idea/libraries
 
 # Gradle build files
 gradle
 gradlew*
+.gradle
+/build
+
+.DS_Store

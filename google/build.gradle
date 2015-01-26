@@ -1,15 +1,14 @@
 apply plugin: 'android-library'
 
 dependencies {
-    compile project(':git:android-utils:core')
-    compile 'com.android.support:support-v4:19.1.+'
+    compile project(':core')
     compile 'com.google.android.gms:play-services:4.4.+'
     compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.1.0"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
 
     sourceSets {
         main {
@@ -22,16 +21,37 @@ android {
             assets.srcDirs = ['assets']
         }
 
-        // Move the tests to tests/java, tests/res, etc...
-        instrumentTest.setRoot('tests')
+        defaultPublishConfig "debug"
 
-        // Move the build types to build-types/<type>
-        // For instance, build-types/debug/java, build-types/debug/AndroidManifest.xml, ...
-        // This moves them out of them default location under src/<type>/... which would
-        // conflict with src/ being used by the main source set.
-        // Adding new build types or product flavors should be accompanied
-        // by a similar customization.
-        debug.setRoot('build-types/debug')
-        release.setRoot('build-types/release')
+        defaultConfig {
+            minSdkVersion 9
+            targetSdkVersion 21
+            versionCode 1000
+            versionName "1.0.0"
+            archivesBaseName="com.kevinquan.android.google.utils"
+            version android.defaultConfig.versionName
+        }
+
+        lintOptions {
+            abortOnError false
+        }
+
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+    }
+
+    // http://tiku.io/questions/2866329/how-to-set-name-of-aar-output-from-gradle
+    libraryVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.aar')) {
+                def fileName = "${archivesBaseName}-${version}.aar"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
     }
 }
