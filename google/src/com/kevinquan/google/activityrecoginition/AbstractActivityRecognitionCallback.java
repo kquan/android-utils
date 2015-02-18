@@ -1,6 +1,6 @@
 /*
  * Copyright 2014 Kevin Quan (kevin.quan@gmail.com)
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,20 +15,20 @@
  */
 package com.kevinquan.google.activityrecoginition;
 
-import com.google.android.gms.common.GooglePlayServicesClient.ConnectionCallbacks;
-import com.google.android.gms.location.ActivityRecognitionClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 
 public abstract class AbstractActivityRecognitionCallback implements ConnectionCallbacks {
-    
+
     @SuppressWarnings("unused")
     private static final String TAG = AbstractActivityRecognitionCallback.class.getSimpleName();
-    
-    protected ActivityRecognitionClient mClient; 
 
-    public AbstractActivityRecognitionCallback setClient(ActivityRecognitionClient client) {
+    protected GoogleApiClient mClient;
+
+    @Override public void onConnectionSuspended(int reason) {}
+
+    public AbstractActivityRecognitionCallback setClient(GoogleApiClient client) {
         mClient = client;
         return this;
     }
-    
-    @Override public void onDisconnected() {}
 }
