@@ -1,6 +1,6 @@
 /*
  * Copyright 2014 Kevin Quan (kevin.quan@gmail.com)
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -28,6 +28,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -45,24 +46,19 @@ import android.view.inputmethod.InputMethodManager;
 public class DeviceUtils {
 
     /**
-     * Constants for Android permissions 
+     * Constants for Android permissions
      * @author Kevin Quan (kevin.quan@gmail.com)
      *
      */
     public interface Permissions {
-    	
+
     	public static final String GET_ACCOUNTS = "android.permission.GET_ACCOUNTS";
         public static final String INTERNET = "android.permission.INTERNET";
         public static final String WIFI_STATE = "android.permission.ACCESS_WIFI_STATE";
         public static final String NETWORK_STATE = "android.permission.ACCESS_NETWORK_STATE";
         public static final String WRITE_SD = "android.permission.WRITE_EXTERNAL_STORAGE";
+        public static final String READ_PROFILE = "android.permission.READ_PROFILE";
     }
-    
-    private static final String TAG = DeviceUtils.class.getSimpleName();
-    
-    public static final String SCHEME_FILE = "file://";
-    
-    public static final String LINE_BREAK = System.getProperty("line.separator");
 
     /**
      * Converts a dp value to the actual pixel size given the provided context
@@ -79,7 +75,7 @@ public class DeviceUtils {
         // 0.5 is added to allow proper rounding when truncating
         return (int) ((dp * displayMetrics.density) + 0.5);
     }
-    
+
     /**
      * Converts a pixel value to the dp of the device given the provided context
      * @param context The context that defines the pixel to dp mapping
@@ -95,55 +91,62 @@ public class DeviceUtils {
         // 0.5 is added to allow proper rounding when truncating
         return pixels / displayMetrics.density;
     }
-    
+
     /**
-     * Retrieves the window metrics being used by the provided activity
-     * @param activity The activity to check
-     * @return the display metrics of the provided activity
+     * Try and return a unique ID for the device
+     * @param activity The current context
+     * @return A unique ID or null if none could be found
      */
-    public static DisplayMetrics getWindowMetrics(Activity activity) {
-        DisplayMetrics metrics = new DisplayMetrics();
-        if (activity == null) return metrics;
-        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
-        return metrics;
+    public static String getDeviceId(Context context) {
+        if (context == null) {
+            return null;
+        }
+        String deviceId = null;
+        try {
+            deviceId = Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+        } catch (Exception e) {
+            Log.e(TAG, "Could not get device id from Settings", e);
+        }
+        if (TextUtils.isEmpty(deviceId) && BuildUtils.isGingerbreadOrGreater()) {
+            return Build.SERIAL;
+        }
+        return null;
     }
-    
+
     /**
-     * Checks whether a context has a particular permission
-     * @param context The context to check
-     * @param permission The permission to check for
-     * @return True if the permission exists for the context
+     * Retrieves the first phone number on the device
+     * @param context  The context to use
+     * @return The phone number if one exists
      */
-    public static boolean hasPermission(Context context, String permission) {
-        if (context == null || TextUtils.isEmpty(permission)) return false;
-        return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+    public static String getFirstPhoneNumber(Context context) {
+        if (context == null) {
+            return null;
+        }
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getLine1Number();
     }
-    
+
     /**
-     * Hides the keyboard implicitly if it is visible
-     * @param context The context from which to get the InputMethodManager
-     * @param viewToGetWindowToken The view from which to get a window token.
+     * Retrieve the height of the navigation bar
+     * @param activity A visual activity to use to get a window
+     * @return The height of the navigation bar, or 0 if it could not be computed.
      */
-    public static void hideKeyboard(Context context, View viewToGetWindowToken) {
-        if (context == null || viewToGetWindowToken == null) return;
-        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(viewToGetWindowToken.getWindowToken(), 0);
+    public static int getNavigationBarHeight(Activity activity) {
+        if (activity == null) {
+            return 0;
+        }
+        int resourceId = activity.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            return activity.getResources().getDimensionPixelSize(resourceId);
+        } else {
+            // TODO: Try and calculate from display height and display frame; but this would only work in portrait orientation
+            return 0;
+        }
     }
-    
-    /**
-     * Shows the keyboard and sends input to the provided field
-     * @param context The context from which to get the InputMethodManager
-     * @param viewToSendInput The view for the keyboard to send input to.
-     */
-    public static void showKeyboard(Context context, View viewToSendInput) {
-        if (context == null || viewToSendInput == null) return;
-        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(viewToSendInput, 0);
-    }
-    
+
     /**
      * Determines the screen orientation.  Return values are defined in {@link Configuration}
-     * @param activity An activity to get the display from 
+     * @param activity An activity to get the display from
      * @return A constant for the screen orientation
      */
     @SuppressWarnings("deprecation")
@@ -192,46 +195,19 @@ public class DeviceUtils {
             return windowDisplayFrame.top;
         }
     }
-    
+
     /**
-     * Retrieve the height of the navigation bar
-     * @param activity A visual activity to use to get a window
-     * @return The height of the navigation bar, or 0 if it could not be computed.
+     * Retrieves the window metrics being used by the provided activity
+     * @param activity The activity to check
+     * @return the display metrics of the provided activity
      */
-    public static int getNavigationBarHeight(Activity activity) {
-        if (activity == null) {
-            return 0;
-        }
-        int resourceId = activity.getResources().getIdentifier("navigation_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            return activity.getResources().getDimensionPixelSize(resourceId);
-        } else {
-            // TODO: Try and calculate from display height and display frame; but this would only work in portrait orientation
-            return 0;
-        }
+    public static DisplayMetrics getWindowMetrics(Activity activity) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        if (activity == null) return metrics;
+        activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return metrics;
     }
-    
-    /**
-     * Try and return a unique ID for the device
-     * @param activity The current context
-     * @return A unique ID or null if none could be found
-     */
-    public static String getDeviceId(Context context) {
-        if (context == null) {
-            return null;
-        }
-        String deviceId = null;
-        try {
-            deviceId = Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-        } catch (Exception e) {
-            Log.e(TAG, "Could not get device id from Settings", e);
-        }
-        if (TextUtils.isEmpty(deviceId) && BuildUtils.isGingerbreadOrGreater()) {
-            return Build.SERIAL;
-        }
-        return null;
-    }
-    
+
     /**
      * Checks whether an intent to open an activity can be handled by anything on this device
      * @param context The context to check with
@@ -245,4 +221,43 @@ public class DeviceUtils {
     	List<ResolveInfo> resolvers = context.getPackageManager().queryIntentActivities(intent, 0);
     	return resolvers != null && !resolvers.isEmpty();
     }
+
+    /**
+     * Checks whether a context has a particular permission
+     * @param context The context to check
+     * @param permission The permission to check for
+     * @return True if the permission exists for the context
+     */
+    public static boolean hasPermission(Context context, String permission) {
+        if (context == null || TextUtils.isEmpty(permission)) return false;
+        return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    /**
+     * Hides the keyboard implicitly if it is visible
+     * @param context The context from which to get the InputMethodManager
+     * @param viewToGetWindowToken The view from which to get a window token.
+     */
+    public static void hideKeyboard(Context context, View viewToGetWindowToken) {
+        if (context == null || viewToGetWindowToken == null) return;
+        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(viewToGetWindowToken.getWindowToken(), 0);
+    }
+
+    /**
+     * Shows the keyboard and sends input to the provided field
+     * @param context The context from which to get the InputMethodManager
+     * @param viewToSendInput The view for the keyboard to send input to.
+     */
+    public static void showKeyboard(Context context, View viewToSendInput) {
+        if (context == null || viewToSendInput == null) return;
+        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(viewToSendInput, 0);
+    }
+
+    private static final String TAG = DeviceUtils.class.getSimpleName();
+
+    public static final String SCHEME_FILE = "file://";
+
+    public static final String LINE_BREAK = System.getProperty("line.separator");
 }
