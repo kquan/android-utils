@@ -25,7 +25,7 @@ import java.util.TimeZone;
 import android.location.Location;
 import android.text.TextUtils;
 
-import com.kevinquan.android.constants.TimeZones;
+import com.kevinquan.constants.TimeZones;
 
 /**
  * Models large cities within Canada (such as capitals).  Lat/Lng data is from Wikipedia

@@ -18,7 +18,7 @@ package com.kevinquan.android.test.utils;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import com.kevinquan.android.utils.CalendarUtils;
+import com.kevinquan.utils.CalendarUtils;
 
 public class CalendarUtilsTests extends TestCase {
 

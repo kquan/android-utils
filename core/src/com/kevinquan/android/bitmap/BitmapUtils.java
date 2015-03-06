@@ -25,7 +25,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
 import android.util.Log;
 
-import com.kevinquan.android.utils.FileUtils;
+import com.kevinquan.utils.FileUtils;
 import com.kevinquan.utils.IOUtils;
 
 /**

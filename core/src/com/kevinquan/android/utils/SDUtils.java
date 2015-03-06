@@ -17,6 +17,8 @@ package com.kevinquan.android.utils;
 
 import java.io.File;
 
+import com.kevinquan.utils.FileUtils;
+
 import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
