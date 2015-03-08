@@ -3,7 +3,8 @@ apply plugin: 'android-library'
 dependencies {
     compile project(':core')
     compile 'com.google.android.gms:play-services:6.5.87'
-    compile fileTree(dir: 'libs', include: '*.jar')
+    // Contains android-support-v4.jar which is undesirable in the build
+    //compile fileTree(dir: 'libs', include: '*.jar')
 }
 
 android {
