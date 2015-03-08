@@ -15,19 +15,21 @@
  */
 package com.kevinquan.android.profile;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 
 import com.kevinquan.android.utils.DeviceUtils;
 import com.kevinquan.android.utils.DeviceUtils.Permissions;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Utility methods to access accounts on the device
@@ -54,6 +56,7 @@ public class AccountUtils {
      * @param context  The context to use
      * @return A list of all accounts (may be empty)
      */
+    @NonNull
     public static List<Account> getAllAccounts(Context context) {
         List<Account> accounts = new ArrayList<Account>();
         if (context == null) {
@@ -76,6 +79,7 @@ public class AccountUtils {
      * @param accountType The type of account to retrieve
      * @return A list of accounts that match the provided type
      */
+    @NonNull
     public static List<Account> getAllAccountsOf(Context context, String accountType) {
         List<Account> accounts = new ArrayList<Account>();
         if (context == null || TextUtils.isEmpty(accountType)) {
@@ -103,6 +107,7 @@ public class AccountUtils {
      * @param accountType The account type to search for
      * @return The first account if one exists
      */
+    @Nullable
     public static Account getFirstAccountsOf(Context context, String accountType) {
         if (context == null || TextUtils.isEmpty(accountType)) {
             return null;

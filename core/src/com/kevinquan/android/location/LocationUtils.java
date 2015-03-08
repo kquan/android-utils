@@ -15,14 +15,16 @@
  */
 package com.kevinquan.android.location;
 
-import com.kevinquan.android.utils.DeviceUtils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.kevinquan.android.utils.DeviceUtils;
 
 /**
  * A collection of utilities for dealing with location
@@ -82,6 +84,7 @@ public class LocationUtils {
      * @param longitude The longitude value to use
      * @return A location object
      */
+    @NonNull
     public static Location asLocation(double latitude, double longitude) {
         Location location = new Location(CONSTRUCTED_LOCATION_PROVIDER_NAME);
         location.setLatitude(latitude);
@@ -157,6 +160,7 @@ public class LocationUtils {
      * @param longitudeKey The preference key that is storing the longitude value
      * @return A location object from the stored value, or if null if no value is stored
      */
+    @Nullable
     public static Location getLocationFromPreference(SharedPreferences prefs, String latitudeKey, String longitudeKey) {
         if (prefs == null || TextUtils.isEmpty(latitudeKey) || TextUtils.isEmpty(longitudeKey)) {
             return null;
@@ -253,6 +257,7 @@ public class LocationUtils {
      * @param context The context to construct the intent with
      * @return The intent or null if no such location exists
      */
+    @Nullable
     public static Intent getLocationSettingsIntent(Context context) {
     	if (context == null) {
     		return null;

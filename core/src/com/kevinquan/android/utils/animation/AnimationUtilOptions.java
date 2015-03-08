@@ -15,11 +15,13 @@
  */
 package com.kevinquan.android.utils.animation;
 
-import java.util.Hashtable;
-
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
+
+import java.util.Hashtable;
 
 /**
  * Convenience class to house animation options when passed to animation utilities 
@@ -51,32 +53,38 @@ public class AnimationUtilOptions {
             mStartImmediately = DEFAULT_START_IMMEDIATELY;
             mExtendedOptions = new Hashtable<String, Object>();
         }
-        
+
+        @NonNull
         public AnimationUtilOptions build() {
             AnimationUtilOptions options = new AnimationUtilOptions(mInterpolator, mDurationInMillis, mStartDelayInMillis, mStartImmediately, mExtendedOptions);
             return options;
         }
 
+        @NonNull
         public Builder setInterpolator(Interpolator interpolator) {
             mInterpolator = interpolator;
             return this;
         }
 
+        @NonNull
         public Builder setDuration(long durationInMillis) {
             mDurationInMillis = durationInMillis;
             return this;
         }
 
+        @NonNull
         public Builder setStartDelay(long startDelayInMillis) {
             mStartDelayInMillis = startDelayInMillis;
             return this;
         }
 
+        @NonNull
         public Builder setStart(boolean startImmediately) {
             mStartImmediately = startImmediately;
             return this;
         }
-        
+
+        @NonNull
         public Builder addOption(String key, Object value) {
             mExtendedOptions.put(key, value);
             return this;
@@ -119,7 +127,8 @@ public class AnimationUtilOptions {
     public boolean shouldStartImmediately() {
         return mStartImmediately;
     }
-    
+
+    @Nullable
     public Object getOption(String key) {
         return mExtendedOptions.get(key);
     }

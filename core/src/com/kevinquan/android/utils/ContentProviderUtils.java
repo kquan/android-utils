@@ -15,12 +15,14 @@
  */
 package com.kevinquan.android.utils;
 
-import java.util.ArrayList;
-
 import android.content.ContentProviderOperation;
 import android.content.ContentProviderResult;
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
+
+import java.util.ArrayList;
 
 
 /**
@@ -37,6 +39,7 @@ public class ContentProviderUtils {
      * @param operations The operations to apply
      * @return An array of {@link ContentProviderResult} that map to each operation
      */
+    @NonNull
     public static ContentProviderResult[] applyBatchSynchronously(Context context, String authority, ArrayList<ContentProviderOperation> operations) {
         ContentProviderResult[] results = new ContentProviderResult[0];
         if (context == null) {
@@ -72,6 +75,7 @@ public class ContentProviderUtils {
      * @param operation The operation to apply
      * @return The result of the operation
      */
+    @Nullable
     public static ContentProviderResult applyOperation(Context context, String authority, ContentProviderOperation operation) {
         ArrayList<ContentProviderOperation> operations = new ArrayList<ContentProviderOperation>();
         operations.add(operation);

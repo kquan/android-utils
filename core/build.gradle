@@ -51,5 +51,6 @@ android {
 }
 
 dependencies {
+    compile ('com.android.support:support-annotations:21.0.3')
     compile fileTree(dir: 'libs', include: ['java-utils-kquan.jar'])
 }

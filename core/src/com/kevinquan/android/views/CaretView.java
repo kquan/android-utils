@@ -22,6 +22,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -43,7 +44,8 @@ public class CaretView extends View {
         rotation180,
         rotation270,
         ;
-        
+
+        @NonNull
         public static Orientation fromOrdinal(int ordinal) {
             if (ordinal < 0 || ordinal > values().length) {
                 return NoRotation;
@@ -56,7 +58,8 @@ public class CaretView extends View {
         Outline(Paint.Style.STROKE),
         Filled(Paint.Style.FILL),
         ;
-        
+
+        @NonNull
         public static Style fromOrdinal(int ordinal) {
             if (ordinal < 0 || ordinal > values().length) {
                 return Outline;

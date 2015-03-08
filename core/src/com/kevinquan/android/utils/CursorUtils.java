@@ -15,12 +15,13 @@
  */
 package com.kevinquan.android.utils;
 
-import java.util.List;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
+
+import java.util.List;
 
 /**
  * Utilities to enable safe handling of {@link Cursor} objects
@@ -202,6 +203,7 @@ public class CursorUtils {
      * @param columnName The column to retrieve
      * @return The actual string, or null if the column doesn't exist.
      */
+    @Nullable
     public static String safeGetString(Cursor result, String columnName) {
         if (result == null || TextUtils.isEmpty(columnName)) return null;
         int columnIndex = result.getColumnIndex(columnName);

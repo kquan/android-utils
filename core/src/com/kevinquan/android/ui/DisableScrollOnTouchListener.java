@@ -15,6 +15,7 @@
  */
 package com.kevinquan.android.ui;
 
+import android.support.annotation.NonNull;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -56,11 +57,13 @@ public class DisableScrollOnTouchListener implements OnTouchListener {
         return false;
     }
 
+    @NonNull
     public DisableScrollOnTouchListener setConsumeScroll(boolean consumeScroll) {
         mIsDisableScroll = consumeScroll;
         return this;
     }
 
+    @NonNull
     public DisableScrollOnTouchListener setOnTouchListener(OnTouchListener onTouchListener) {
         mOnTouchListener = onTouchListener;
         return this;

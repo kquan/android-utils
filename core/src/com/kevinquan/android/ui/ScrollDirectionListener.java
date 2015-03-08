@@ -16,6 +16,7 @@
 package com.kevinquan.android.ui;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -153,16 +154,19 @@ public class ScrollDirectionListener implements OnTouchListener {
         }
     }
 
+    @NonNull
     public ScrollDirectionListener setOnScrollFeedbackListener(OnScrollDirectionListener listener) {
         mListener = listener;
         return this;
     }
 
+    @NonNull
     public ScrollDirectionListener setIgnoreTouchSlop(boolean ignoreSlop) {
         mIgnoreSlop = ignoreSlop;
         return this;
     }
 
+    @NonNull
     public ScrollDirectionListener setOnTouchListener(OnTouchListener onTouchListener) {
         mOnTouchListener = onTouchListener;
         return this;

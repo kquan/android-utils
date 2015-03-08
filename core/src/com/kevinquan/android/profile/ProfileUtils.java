@@ -15,16 +15,14 @@
  */
 package com.kevinquan.android.profile;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Locale;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -32,6 +30,10 @@ import android.util.Patterns;
 import com.kevinquan.android.utils.CursorUtils;
 import com.kevinquan.android.utils.DeviceUtils;
 import com.kevinquan.android.utils.DeviceUtils.Permissions;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Locale;
 
 /**
  * A collection of utilities that work with the user's profile on their phone
@@ -81,6 +83,7 @@ public class ProfileUtils {
 	 * @param context The context to use
 	 * @return The user name or null/empty.
 	 */
+    @Nullable
 	public static String getDisplayName(Context context) {
 		if (!DeviceUtils.hasPermission(context, Permissions.READ_PROFILE)) {
 			Log.w(TAG, "App does not have permission to retrieve profile");
@@ -111,6 +114,7 @@ public class ProfileUtils {
 	 * @return A cursor with all of the user's profiles
 	 */
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    @Nullable
 	public static Cursor getProfile(Context context) {
 		// From http://stackoverflow.com/a/2175688/1339200
 		if (context == null) {
@@ -130,7 +134,8 @@ public class ProfileUtils {
 	 * @return A collection of email addresses.
 	 */
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
-	public static Collection<String> getProfileEmails(Context context) {
+    @NonNull
+    public static Collection<String> getProfileEmails(Context context) {
 		HashSet<String> emails = new HashSet<String>();
 		Cursor profile = null;
 		try {
@@ -157,6 +162,7 @@ public class ProfileUtils {
 	 * @return The first profile photo URI if one exists
 	 */
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    @Nullable
 	public static Uri getProfilePhotoUri(Context context) {
 		Cursor profile = null;
 		try {

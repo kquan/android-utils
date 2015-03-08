@@ -15,13 +15,14 @@
  */
 package com.kevinquan.android.utils;
 
-import java.io.File;
+import android.os.Environment;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
 
 import com.kevinquan.utils.FileUtils;
 
-import android.os.Environment;
-import android.text.TextUtils;
-import android.util.Log;
+import java.io.File;
 
 /**
  * Collection of utilities for working with the SD card
@@ -38,6 +39,7 @@ public class SDUtils {
      * @param content The content to be written to.  The result of the toString() method on the object will be written to disk.
      * @return A file object of the destination file, or null if the write did not succeed.
      */
+    @Nullable
     public static File saveObjectToSD(String destination, Object content) {
         if (!Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             Log.w(TAG, "Could not write to SD card as media is not ready (mounted).");

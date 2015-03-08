@@ -15,8 +15,6 @@
  */
 package com.kevinquan.android.utils;
 
-import java.util.List;
-
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -25,9 +23,13 @@ import android.content.SharedPreferences;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import java.util.List;
 
 /**
  * Collection of utilities related to preferences
@@ -63,6 +65,7 @@ public class PreferenceUtils {
 	 * @param context The context that can identify the current app
 	 * @return An intent to open the current app in Google Play if the device supports it, otherwise null
 	 */
+    @Nullable
 	public static Intent canHandleGooglePlayIntent(Context context) {
 	    if (context == null) return null;
         Intent rateIntent = getGooglePlayIntent(context);
@@ -79,6 +82,7 @@ public class PreferenceUtils {
 	 * @param context The context that can identify the current app
 	 * @return An intent that can be used to open Google Play, or null if the intent cannot be created. 
 	 */
+    @Nullable
 	public static Intent getGooglePlayIntent(Context context) {
 	    if (context == null) return null;
 		Intent rateIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id="+context.getPackageName()));
@@ -136,6 +140,7 @@ public class PreferenceUtils {
      * @return The shared preferences
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    @NonNull
     public static SharedPreferences getMultiProcessAwarePreferences(Context context, String preferenceFile) {
         if (BuildUtils.isHoneycombOrGreater()) {
             return context.getSharedPreferences(preferenceFile, Context.MODE_MULTI_PROCESS);

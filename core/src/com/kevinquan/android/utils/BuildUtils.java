@@ -15,18 +15,19 @@
  */
 package com.kevinquan.android.utils;
 
-import java.io.IOException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-
-import com.kevinquan.utils.IOUtils;
-
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.kevinquan.utils.IOUtils;
+
+import java.io.IOException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * Utilities relating to the current build of the app.
@@ -66,6 +67,7 @@ public class BuildUtils {
      * @param context The context of the app whose version name we wish to get
      * @return The version name or name if it could not be retrieved.
      */
+    @Nullable
     public static String getVersionName(Context context) {
         if (context == null) return null;;
         try {

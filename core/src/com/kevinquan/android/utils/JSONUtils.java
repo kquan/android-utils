@@ -15,12 +15,14 @@
  */
 package com.kevinquan.android.utils;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.text.TextUtils;
-import android.util.Log;
 
 /**
  * Collection of utilities to work with JSON objects.
@@ -37,6 +39,7 @@ public class JSONUtils {
      * @param indentation The amount of indentation for each level
      * @return A pretty string 
      */
+    @NonNull
     public static String prettyPrint(JSONArray array, int indentation) {
         if (array == null) {
             return new String();
@@ -55,6 +58,7 @@ public class JSONUtils {
      * @param indentation The amount of indentation for each level
      * @return A pretty string 
      */
+    @NonNull
     public static String prettyPrint(JSONObject obj, int indentation) {
         if (obj == null) {
             return new String();
@@ -72,6 +76,7 @@ public class JSONUtils {
      * @param jsonAsString The string representation of the JSON
      * @return The JSON object or null if it could not be constructed
      */
+    @NonNull
     public static JSONObject safeCreateObject(String jsonAsString) {
         if (TextUtils.isEmpty(jsonAsString)) {
             Log.w(TAG, "No content was provided.");
@@ -93,6 +98,7 @@ public class JSONUtils {
      * @param key The key to retrieve
      * @return the JSON Array object stored in the key, or null if the key doesn't exist
      */
+    @Nullable
     public static JSONArray safeGetArray(JSONObject obj, String key) {
         if (obj == null || TextUtils.isEmpty(key)) return null;
         if (obj.has(key)) {
@@ -108,9 +114,10 @@ public class JSONUtils {
     /**
      * Retrieve a JSON array stored at the provided key from the provided JSON array
      * @param array The JSON object to retrieve from
-     * @param key The key to retrieve
+     * @param index The index to retrieve
      * @return the array stored in the key, or null if the key doesn't exist
      */
+    @Nullable
     public static JSONArray safeGetArrayFromArray(JSONArray array, int index) {
         if (array == null || index < 0) return null;
         if (index < array.length() ) {
@@ -129,6 +136,7 @@ public class JSONUtils {
      * @param key The key to retrieve
      * @return the array stored in the key, or null if the key doesn't exist
      */
+    @Nullable
     public static JSONArray safeGetArrayFromObject(JSONObject obj, String key) {
         if (obj == null || TextUtils.isEmpty(key)) return null;
         if (obj.has(key)) {
@@ -218,6 +226,7 @@ public class JSONUtils {
      * @param key The key to retrieve
      * @return the JSON object stored in the key, or null if the key doesn't exist
      */
+    @Nullable
     public static JSONObject safeGetJSONObject(JSONObject obj, String key) {
         if (obj == null || TextUtils.isEmpty(key)) return null;
         if (obj.has(key)) {
@@ -233,9 +242,10 @@ public class JSONUtils {
     /**
      * Retrieve a JSON object stored at the provided index from the provided JSON Array object
      * @param obj The JSON Array object to retrieve from
-     * @param key The index to retrieve
+     * @param index The index to retrieve
      * @return the JSON object stored at the index, or null if the index doesn't exist
      */
+    @Nullable
     public static JSONObject safeGetJSONObjectFromArray(JSONArray obj, int index) {
         if (obj == null || index < 0) return null;
         if (obj.length() > index) {
@@ -272,6 +282,7 @@ public class JSONUtils {
      * @param key The key to retrieve
      * @return the JSON object stored in the key, or null if the key doesn't exist
      */
+    @Nullable
     public static JSONObject safeGetObject(JSONObject obj, String key) {
         if (obj == null || TextUtils.isEmpty(key)) return null;
         if (obj.has(key)) {
@@ -290,6 +301,7 @@ public class JSONUtils {
      * @param key The key to retrieve
      * @return the string stored in the key, or null if the key doesn't exist
      */
+    @Nullable
     public static String safeGetString(JSONObject obj, String key) {
         if (obj == null || TextUtils.isEmpty(key)) return null;
         if (obj.has(key)) {
@@ -309,6 +321,7 @@ public class JSONUtils {
      * @param index The index to retrieve the string from
      * @return the string stored at the index, or null if the index doesn't exist
      */
+    @Nullable
     public static String safeGetStringFromArray(JSONArray obj, int index) {
         if (obj != null && obj.length() > index) {
             try {

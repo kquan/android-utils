@@ -15,20 +15,21 @@
  */
 package com.kevinquan.android.location;
 
-import java.util.Comparator;
-
-import org.json.JSONObject;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.kevinquan.android.utils.CursorUtils;
 import com.kevinquan.android.utils.JSONUtils;
+
+import org.json.JSONObject;
+
+import java.util.Comparator;
 
 /**
  * This class models a recorded physical location position. 
@@ -91,7 +92,8 @@ public class SimpleRecordedLocation implements Parcelable {
         public int getDbId() {
             return mDbId;
         }
-        
+
+        @NonNull
         public static LocationProviderType fromDbId(int dbId) {
             switch (dbId) {
                 case 1: return GooglePlayServices;
@@ -105,7 +107,8 @@ public class SimpleRecordedLocation implements Parcelable {
                 default: return Unknown;
             }
         }
-        
+
+        @NonNull
         public static LocationProviderType fromLiteral(String value) {
             if (TextUtils.isEmpty(value)) {
                 return LocationProviderType.Unknown;
@@ -122,7 +125,8 @@ public class SimpleRecordedLocation implements Parcelable {
             Log.w(TAG, "Could not find location provider type with literal value: "+value);
             return LocationProviderType.Unknown;
         }
-        
+
+        @NonNull
         public static LocationProviderType fromValue(String value) {
             if (TextUtils.isEmpty(value)) {
                 return LocationProviderType.Unknown;
@@ -283,7 +287,8 @@ public class SimpleRecordedLocation implements Parcelable {
     public LocationProviderType getProvider() {
         return mProvider;
     }
-    
+
+    @NonNull
     public Location asLocation() {
         Location location = new Location(TAG);
         location.setLatitude(mLatitude);
@@ -324,8 +329,9 @@ public class SimpleRecordedLocation implements Parcelable {
 				&& mSpeed == other.getSpeed()
 				&& mProvider == other.getProvider();
 	}
-	
-	public JSONObject asJson(boolean concise) {
+
+    @NonNull
+    public JSONObject asJson(boolean concise) {
 		JSONObject output = new JSONObject();
 		JSONUtils.safePutDouble(output, JSON_FIELD_LATITUDE, mLatitude);
 		JSONUtils.safePutDouble(output, JSON_FIELD_LONGITUDE, mLongitude);
@@ -339,8 +345,9 @@ public class SimpleRecordedLocation implements Parcelable {
 		JSONUtils.safePutInt(output, JSON_FIELD_PROVIDER_ID, mProvider.getDbId());
 		return output;
 	}
-	
-	public ContentValues getContentValues() {
+
+    @NonNull
+    public ContentValues getContentValues() {
         ContentValues values = new ContentValues();
         values.put(COLUMN_LATITUDE, getLatitude());
         values.put(COLUMN_LONGITUDE, getLongitude());

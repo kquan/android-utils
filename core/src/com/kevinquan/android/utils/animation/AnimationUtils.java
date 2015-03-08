@@ -17,7 +17,9 @@ package com.kevinquan.android.utils.animation;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.os.Build;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewPropertyAnimator;
@@ -52,7 +54,8 @@ public class AnimationUtils {
      * @param options The options that govern the animation
      * @return The animator if animation can happen, or null otherwise
      */
-    @SuppressLint("NewApi")
+    @Nullable
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static ViewPropertyAnimator fadeOutView(final View view, AnimationUtilOptions options) {
         if (view.getVisibility() != View.VISIBLE) {
             Log.i(TAG, "No fade out performed as view is already not visible.");
@@ -104,7 +107,8 @@ public class AnimationUtils {
      * @param options The options that govern the animation
      * @return The animator if animation can happen, or null otherwise
      */
-    @SuppressLint("NewApi")
+    @Nullable
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     public static ViewPropertyAnimator fadeInView(final View view, AnimationUtilOptions options) {
         if (options == null) {
             Log.i(TAG, "No options provided, using defaults.");

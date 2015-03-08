@@ -15,18 +15,20 @@
  */
 package com.kevinquan.android.bitmap;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapFactory.Options;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.kevinquan.utils.FileUtils;
 import com.kevinquan.utils.IOUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 /**
  * Collection of utilities when working with bitmaps
@@ -43,6 +45,7 @@ public class BitmapUtils {
      * @param bitmapLocation The location of the image
      * @return The metadata for the image
      */
+    @NonNull
     public static Options loadBitmapMetadataFrom(File bitmapLocation) {
         BitmapFactory.Options loadOptions = new BitmapFactory.Options();
         loadOptions.inJustDecodeBounds = true;
@@ -88,6 +91,7 @@ public class BitmapUtils {
      * @param reductionFactor The factor to reduce the image by
      * @return The loaded bitmap
      */
+    @Nullable
     public static Bitmap loadScaledBitmapFrom(File bitmapLocation, int reductionFactor) {
         if (bitmapLocation == null || !bitmapLocation.exists()) {
             return null;

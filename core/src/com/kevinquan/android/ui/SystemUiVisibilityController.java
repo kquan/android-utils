@@ -15,7 +15,10 @@
  */
 package com.kevinquan.android.ui;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 
@@ -39,6 +42,8 @@ public class SystemUiVisibilityController {
      * @param activity The activity to apply the settings to
      * @return
      */
+    @NonNull
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public SystemUiVisibilityController apply(Activity activity) {
         if (activity == null) {
             Log.w(TAG, "No activity available to apply system visibility to.");
@@ -55,6 +60,8 @@ public class SystemUiVisibilityController {
      * @param activity The activity to apply the settings to
      * @return
      */
+    @NonNull
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public SystemUiVisibilityController registerListener(Activity activity) {
         if (activity == null) {
             Log.w(TAG, "No activity available to register system UI visibility listener to.");

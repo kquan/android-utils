@@ -16,16 +16,17 @@
 
 package com.kevinquan.android.utils;
 
-import java.lang.reflect.Method;
-
-import com.kevinquan.android.utils.DeviceUtils.Permissions;
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.support.annotation.Nullable;
 import android.util.Log;
+
+import com.kevinquan.android.utils.DeviceUtils.Permissions;
+
+import java.lang.reflect.Method;
 
 /**
  * Collection of utilities that relate to the network
@@ -101,6 +102,7 @@ public class NetworkUtils {
      * @param context The context to construct the intent with
      * @return The intent or null if no such location exists
      */
+    @Nullable
     public static Intent getWifiSettingsIntent(Context context) {
     	if (context == null) {
     		return null;

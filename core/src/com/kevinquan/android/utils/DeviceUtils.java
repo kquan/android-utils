@@ -15,8 +15,6 @@
  */
 package com.kevinquan.android.utils;
 
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -28,6 +26,8 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -36,6 +36,8 @@ import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
+
+import java.util.List;
 
 /**
  * Utility class for methods related to a device
@@ -94,9 +96,10 @@ public class DeviceUtils {
 
     /**
      * Try and return a unique ID for the device
-     * @param activity The current context
+     * @param context The current context
      * @return A unique ID or null if none could be found
      */
+    @Nullable
     public static String getDeviceId(Context context) {
         if (context == null) {
             return null;
@@ -118,6 +121,7 @@ public class DeviceUtils {
      * @param context  The context to use
      * @return The phone number if one exists
      */
+    @Nullable
     public static String getFirstPhoneNumber(Context context) {
         if (context == null) {
             return null;
@@ -150,7 +154,6 @@ public class DeviceUtils {
      * @return A constant for the screen orientation
      */
     @SuppressWarnings("deprecation")
-    @SuppressLint("NewApi")
     public static int getScreenOrientation(Activity activity) {
         if (activity == null) {
             return Configuration.ORIENTATION_UNDEFINED;
@@ -201,6 +204,7 @@ public class DeviceUtils {
      * @param activity The activity to check
      * @return the display metrics of the provided activity
      */
+    @NonNull
     public static DisplayMetrics getWindowMetrics(Activity activity) {
         DisplayMetrics metrics = new DisplayMetrics();
         if (activity == null) return metrics;
