@@ -2,14 +2,12 @@ apply plugin: 'android-library'
 
 dependencies {
     compile project(':core')
-    compile 'com.google.android.gms:play-services:6.5.87'
-    // Contains android-support-v4.jar which is undesirable in the build
-    //compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.google.android.gms:play-services:7.8.0'
 }
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 23
+    buildToolsVersion "23"
 
     sourceSets {
         main {
@@ -26,9 +24,9 @@ android {
 
         defaultConfig {
             minSdkVersion 9
-            targetSdkVersion 21
-            versionCode 1000
-            versionName "1.0.0"
+            targetSdkVersion 23
+            versionCode 1010
+            versionName "1.0.1"
             archivesBaseName="com.kevinquan.android.google.utils"
             version android.defaultConfig.versionName
         }

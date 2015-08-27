@@ -34,12 +34,15 @@ public class GoogleAnalyticsUtils {
 
 		public static final String ACTION_BUTTON_PRESS = "ButtonPress";
 		public static final String ACTION_BACK_PRESSED = "BackButtonPress";
-		public static final String ACTION_CLICK = "Tap";
+		public static final String ACTION_TAP = "Tap";
+		public static final String ACTION_CLICK = ACTION_TAP;
+		public static final String ACTION_LONG_PRESS = "LongPress";
 		public static final String ACTION_VIEW = "View";
 		public static final String ACTION_SWIPE = "Swipe";
 		public static final String ACTION_EDIT = "Edit";
 		public static final String ACTION_ENABLE = "Enable";
 		public static final String ACTION_DISABLE = "Disable";
+		public static final String ACTION_CANCEL = "Cancel";
 		public static final String ACTION_ERROR = "Error";
 		public static final String ACTION_SEARCH = "Search";
 		public static final String ACTION_SELECTION = "Select";
