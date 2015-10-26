@@ -1,4 +1,4 @@
-package com.kevinquan.utils;
+package com.kevinquan.android.utils;
 
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
