@@ -6,8 +6,8 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23"
+    compileSdkVersion 25
+    buildToolsVersion "26.0.2"
 
     sourceSets {
         main {
@@ -43,6 +43,14 @@ android {
         }
     }
 
+    android.libraryVariants.all { variant ->
+        variant.outputs.all {
+            if (outputFileName != null && outputFileName.endsWith('.aar')) {
+                outputFileName = "${archivesBaseName}-${version}.aar"
+            }
+        }
+    }
+    /*
     // http://tiku.io/questions/2866329/how-to-set-name-of-aar-output-from-gradle
     libraryVariants.all { variant ->
         variant.outputs.each { output ->
@@ -53,4 +61,5 @@ android {
             }
         }
     }
+    */
 }

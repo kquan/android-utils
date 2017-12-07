@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23"
+    compileSdkVersion 25
+    buildToolsVersion "26.0.2"
 
     sourceSets {
         main {
@@ -19,10 +19,10 @@ android {
     defaultPublishConfig "debug"
 
     defaultConfig {
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 23
         versionCode 1010
-        versionName "1.0.1"
+        versionName "1.0.2"
         archivesBaseName="com.kevinquan.android.utils"
         version android.defaultConfig.versionName
     }
@@ -38,6 +38,15 @@ android {
         }
     }
 
+    android.libraryVariants.all { variant ->
+        variant.outputs.all {
+            if (outputFileName != null && outputFileName.endsWith('.aar')) {
+                outputFileName = "${archivesBaseName}-${version}.aar"
+            }
+        }
+    }
+
+    /*
     // http://tiku.io/questions/2866329/how-to-set-name-of-aar-output-from-gradle
     libraryVariants.all { variant ->
         variant.outputs.each { output ->
@@ -48,12 +57,14 @@ android {
             }
         }
     }
+    */
 }
 
 dependencies {
     compile ('com.android.support:support-annotations:23.0.0')
     compile 'com.kevinquan:java-utils:1.0.0'
 
-    compile 'com.google.code.gson:gson:2.3.1'
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
